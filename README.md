@@ -1,0 +1,2 @@
+# AWS_NODE_AGO24_DESAFIO_02_ALFRED
+Desafio 2 CompassOul
