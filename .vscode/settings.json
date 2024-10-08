@@ -7,5 +7,9 @@
   "editor.codeActionsOnSave": {
     "source.fixAll.prettier": "explicit"
   },
-  "editor.rulers": [80]
+  "editor.rulers": [80],
+  "code-runner.executorMap": {
+    "javascript": "node",
+    "typescript": "ts-node"
+  }
 }
