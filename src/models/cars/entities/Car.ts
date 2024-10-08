@@ -1,11 +1,10 @@
-import { CarItems } from './CarsItems'
+import { CarStatus } from '../../../database/utils/car.status.enum'
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn,
-  OneToMany
+  UpdateDateColumn
 } from 'typeorm'
 
 @Entity('cars')
@@ -32,10 +31,13 @@ export class Car {
   price: number
 
   @Column('simple-array')
-  @OneToMany(() => CarItems, (carItems) => carItems.car_id)
-  items: CarItems[]
+  items: string[]
 
-  @Column()
+  @Column({
+    type: 'enum',
+    enum: CarStatus,
+    default: CarStatus.ATIVO
+  })
   status: string
 
   @CreateDateColumn()

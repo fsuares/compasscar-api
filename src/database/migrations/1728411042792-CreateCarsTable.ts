@@ -1,11 +1,8 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm'
+import { CarStatus } from '../utils/car.status.enum'
 
 export class CreateCarsTable1728411042792 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.query(`
-        CREATE TYPE car_status AS ENUM ('ativo', 'inativo', 'excluido')
-    `)
-
     await queryRunner.createTable(
       new Table({
         name: 'cars',
@@ -47,8 +44,8 @@ export class CreateCarsTable1728411042792 implements MigrationInterface {
           },
           {
             name: 'status',
-            type: 'car_status',
-            default: "'ativo'"
+            type: 'CarStatus',
+            default: `'${CarStatus.ATIVO}'`
           },
           {
             name: 'created_at',
