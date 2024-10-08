@@ -2,11 +2,9 @@ import 'reflect-metadata'
 import { DataSource } from 'typeorm'
 
 import { User } from '../models/users/entities/User'
-import { Car } from '../models/cars/entities/Cars'
-import { CarItems } from '../models/cars/entities/CarsItems'
+import { Car } from '../models/cars/entities/Car'
 
 import { CreateUsersTable1728394270904 } from './migrations/1728394270904-CreateUsersTable'
-import { CreateCarsItemsTable1728411551689 } from './migrations/1728411551689-CreateCarsItemsTable'
 import { CreateCarsTable1728411042792 } from './migrations/1728411042792-CreateCarsTable'
 
 export const dataSource = new DataSource({
@@ -18,12 +16,8 @@ export const dataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [User, Car, CarItems],
-  migrations: [
-    CreateUsersTable1728394270904,
-    CreateCarsItemsTable1728411551689,
-    CreateCarsTable1728411042792
-  ],
+  entities: [User, Car],
+  migrations: [CreateUsersTable1728394270904, CreateCarsTable1728411042792],
   subscribers: []
 })
 
