@@ -1,9 +1,9 @@
+import 'dotenv/config'
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
 
 import { User } from '../models/users/entities/User'
-
-import { CreateUsersTable1728394270904 } from './migrations/1728394270904-CreateUsersTable'
+import { Customer } from '../models/customers/entities/Customer'
 
 export const dataSource = new DataSource({
   type: 'postgres',
@@ -12,10 +12,10 @@ export const dataSource = new DataSource({
   username: process.env.DB_USER,
   password: process.env.DB_PASS,
   database: process.env.DB_NAME,
-  synchronize: true,
+  synchronize: false,
   logging: false,
-  entities: [User],
-  migrations: [CreateUsersTable1728394270904],
+  entities: [User, Customer],
+  migrations: ['./migrations'],
   subscribers: []
 })
 
