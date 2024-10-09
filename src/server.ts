@@ -1,6 +1,6 @@
 import 'dotenv/config'
+import '@datasource'
 import { app } from './app'
-import './database/data-source'
 
 import { Router } from 'express'
 import customersRouter from './models/customers/routes/CustomersRoutes'
