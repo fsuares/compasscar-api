@@ -4,6 +4,7 @@ import { DataSource } from 'typeorm'
 
 import { Car } from '../models/cars/entities/Car'
 import { User } from '../models/users/entities/User'
+import { Customer } from '../models/customers/entities/Customer'
 
 import { CreateUsersTable1728394270904 } from './migrations/1728394270904-CreateUsersTable'
 import { CreateCarsTable1728411042792 } from './migrations/1728411042792-CreateCarsTable'
