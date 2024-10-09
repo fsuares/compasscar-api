@@ -28,7 +28,7 @@ export class CreateCarsTable1728411042792 implements MigrationInterface {
           },
           {
             name: 'km',
-            type: 'number'
+            type: 'integer'
           },
           {
             name: 'year',
@@ -36,7 +36,7 @@ export class CreateCarsTable1728411042792 implements MigrationInterface {
           },
           {
             name: 'price',
-            type: 'number'
+            type: 'float'
           },
           {
             name: 'items',
@@ -44,7 +44,8 @@ export class CreateCarsTable1728411042792 implements MigrationInterface {
           },
           {
             name: 'status',
-            type: 'CarStatus',
+            type: 'enum',
+            enum: Object.values(CarStatus),
             default: `'${CarStatus.ATIVO}'`
           },
           {
