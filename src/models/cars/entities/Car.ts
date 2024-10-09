@@ -30,7 +30,7 @@ export class Car {
   @Column({ type: 'decimal', precision: 2, scale: 2 })
   price: number
 
-  @Column('simple-array')
+  @Column('text', { array: true })
   items: string[]
 
   @Column({
