@@ -1,4 +1,4 @@
-import { CarStatus } from '../../../database/utils/car.status.enum'
+import { CarStatus } from '@database/utils/car.status.enum'
 import {
   Entity,
   PrimaryGeneratedColumn,

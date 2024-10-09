@@ -1,12 +1,6 @@
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
 
-import { User } from '../models/users/entities/User'
-import { Car } from '../models/cars/entities/Car'
-
-import { CreateUsersTable1728394270904 } from './migrations/1728394270904-CreateUsersTable'
-import { CreateCarsTable1728411042792 } from './migrations/1728411042792-CreateCarsTable'
-
 export const dataSource = new DataSource({
   type: 'postgres',
   host: process.env.DB_HOST,
@@ -16,8 +10,8 @@ export const dataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: true,
   logging: false,
-  entities: [User, Car],
-  migrations: [CreateUsersTable1728394270904, CreateCarsTable1728411042792],
+  entities: ['**/**/entities/*.ts'],
+  migrations: ['@database/migrations/*.ts'],
   subscribers: []
 })
 
