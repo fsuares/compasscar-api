@@ -1,3 +1,4 @@
+import { log } from 'console'
 import AppError from '@errors/AppError'
 import { CarsRepository } from '@cars/repositories/CarsRepository'
 
@@ -25,18 +26,24 @@ export class CreateCarsService {
     if (carAlreadyExists && carAlreadyExists.status === 'ativo') {
       throw new AppError('Car already exists', 409)
     }
+    try {
+      const car = CarsRepository.create({
+        license_plate,
+        brand,
+        model,
+        km,
+        year,
+        price,
+        items
+      })
 
-    const car = CarsRepository.create({
-      license_plate,
-      brand,
-      model,
-      km,
-      year,
-      price,
-      items
-    })
-
-    await CarsRepository.save(car)
-    return car
+      await CarsRepository.save(car)
+      return car
+    } catch (error) {
+      throw new AppError(
+        `Internal server error while saving the car ${error}`,
+        594
+      )
+    }
   }
 }

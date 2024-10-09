@@ -1,4 +1,4 @@
-import { CarStatus } from '@database/utils/car.status.enum'
+import { CarStatus } from '../../../database/utils/car.status.enum'
 import {
   Entity,
   PrimaryGeneratedColumn,
@@ -27,10 +27,10 @@ export class Car {
   @Column()
   year: number
 
-  @Column()
+  @Column({ type: 'decimal', precision: 2, scale: 2 })
   price: number
 
-  @Column('simple-array')
+  @Column('text', { array: true })
   items: string[]
 
   @Column({
