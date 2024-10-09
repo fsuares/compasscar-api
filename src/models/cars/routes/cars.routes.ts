@@ -33,4 +33,14 @@ carsRouter.post(
   carsController.create
 )
 
+carsRouter.delete(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
+  carsController.delete
+)
+
 export default carsRouter

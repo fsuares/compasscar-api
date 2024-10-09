@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { CreateCarsService } from '@cars/services/CreateCarService'
 import { ShowCarService } from '@cars/services/ShowCarService'
 import { ListCarService } from '@cars/services/ListCarsService'
+import { DeleteCarService } from '@cars/services/DeleteCarService'
 
 export default class UsersController {
   public async index(req: Request, res: Response): Promise<any> {
@@ -36,5 +37,11 @@ export default class UsersController {
     })
 
     return res.status(201).json(cars)
+  }
+
+  public async delete(req: Request, res: Response): Promise<any> {
+    const { id } = req.params
+    const deleteCar = new DeleteCarService().execute(id)
+    return res.status(204).send()
   }
 }
