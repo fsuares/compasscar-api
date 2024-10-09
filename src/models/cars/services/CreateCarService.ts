@@ -1,5 +1,5 @@
-import AppError from '../../../errors/AppError'
-import { CarsRepository } from '../repositories/CarsRepository'
+import AppError from '@errors/AppError'
+import { CarsRepository } from '@cars/repositories/CarsRepository'
 
 interface ICreateCar {
   license_plate: string

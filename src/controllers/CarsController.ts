@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { CreateCarsService } from '../models/cars/services/CreateCarService'
+import { CreateCarsService } from '@cars/services/CreateCarService'
 
 export default class UsersController {
   public async create(req: Request, res: Response): Promise<any> {

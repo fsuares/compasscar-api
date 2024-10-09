@@ -9,19 +9,24 @@
     "strict": true,
     "noImplicitAny": true,
     "strictPropertyInitialization": false,
-    "baseUrl": "./src",
-    "paths": {
-      "@users": ["/models/users"],
-      "@customers": ["/models/customers"],
-      "@cars": ["/models/cars"],
-      "@orders": ["/models/orders"]
-    },
     "esModuleInterop": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "forceConsistentCasingInFileNames": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@users/*": ["models/users/*"],
+      "@customers/*": ["models/customers/*"],
+      "@cars/*": ["models/cars/*"],
+      "@orders/*": ["models/orders/*"],
+      "@utils/*": ["database/utils/*"],
+      "@datasource": ["database/data-source"],
+      "@database/*": ["database/*"],
+      "@errors/*": ["errors/*"],
+      "@controllers/*": ["controllers/*"]
+    }
   },
   "exclude": ["eslint.config.mjs"]
 }

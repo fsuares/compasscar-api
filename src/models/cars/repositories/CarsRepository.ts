@@ -1,5 +1,5 @@
-import { dataSource } from '../../../database/data-source'
-import { Car } from '../entities/Car'
+import { dataSource } from '@database/data-source'
+import { Car } from '@cars/entities/Car'
 
 export const CarsRepository = dataSource.getRepository(Car).extend({
   findByModel(model: string) {
