@@ -32,4 +32,14 @@ customersRouter.post(
   customersController.create
 )
 
+customersRouter.get(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
+  customersController.show
+)
+
 export default customersRouter
