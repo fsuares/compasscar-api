@@ -4,7 +4,7 @@ import { ShowCarService } from '@cars/services/ShowCarService'
 import { ListCarService } from '@cars/services/ListCarsService'
 import { DeleteCarService } from '@cars/services/DeleteCarService'
 
-export default class UsersController {
+export default class CarsController {
   public async index(req: Request, res: Response): Promise<any> {
     const page = Number(req.query.page) || 1
     const limit = Number(req.query.limit) || 10
