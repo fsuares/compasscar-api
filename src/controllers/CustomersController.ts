@@ -1,22 +1,19 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express'
-import { dataSource } from '../database/data-source'
+import { CreateCustomerService } from '@customers/services/CreateCustomerService'
 
 export default class CustomersController {
   public async create(req: Request, res: Response): Promise<any> {
     const { name, birth_date, cpf, email, phone } = req.body
 
-    const customersRepository = dataSource.getRepository('customers')
+    const createCustomer = new CreateCustomerService()
 
-    const customer = customersRepository.create({
+    const customer = await createCustomer.execute({
       name,
       birth_date,
       cpf,
       email,
       phone
     })
-
-    await customersRepository.save(customer)
 
     return res.status(201).json(customer)
   }
