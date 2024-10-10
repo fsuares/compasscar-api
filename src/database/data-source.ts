@@ -8,6 +8,7 @@ import { Customer } from '../models/customers/entities/Customer'
 
 import { CreateUsersTable1728394270904 } from './migrations/1728394270904-CreateUsersTable'
 import { CreateCarsTable1728411042792 } from './migrations/1728411042792-CreateCarsTable'
+import { CreateCustomers1728413724717 } from './migrations/1728413724717-CreateCustomers'
 
 export const dataSource = new DataSource({
   type: 'postgres',
@@ -18,8 +19,12 @@ export const dataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: false,
   logging: false,
-  entities: [User, Car],
-  migrations: [CreateUsersTable1728394270904, CreateCarsTable1728411042792],
+  entities: [User, Car, Customer],
+  migrations: [
+    CreateUsersTable1728394270904,
+    CreateCarsTable1728411042792,
+    CreateCustomers1728413724717
+  ],
   subscribers: []
 })
 
