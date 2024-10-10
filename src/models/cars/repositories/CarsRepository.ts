@@ -3,6 +3,14 @@ import { Car } from '@cars/entities/Car'
 import { ISearchParams, ICarPaginate } from '@cars/interfaces/CarInterfaces'
 
 export const CarsRepository = dataSource.getRepository(Car).extend({
+  async deleteCar(id: string) {
+    return this.createQueryBuilder('cars')
+      .update('cars')
+      .set({ status: 'excluido' })
+      .where('cars.id = :id', { id })
+      .execute()
+  },
+
   async findByModel(model: string) {
     return this.createQueryBuilder('cars')
       .where('cars.model = :model', { model })
