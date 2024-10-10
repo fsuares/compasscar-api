@@ -14,5 +14,13 @@ export const CustomersRepository = dataSource.getRepository(Customer).extend({
       .where('customers.cpf = :cpf', { cpf })
       .andWhere('customers.excluded_at IS NULL')
       .getOne()
+  },
+
+  findByID(id: string) {
+    return this.createQueryBuilder('customers')
+      .where('customers.id = :id', {
+        id
+      })
+      .getOne()
   }
 })
