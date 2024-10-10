@@ -22,5 +22,15 @@ export const CustomersRepository = dataSource.getRepository(Customer).extend({
         id
       })
       .getOne()
+  },
+
+  customersSoftDelete(id: string, date: Date) {
+    return this.createQueryBuilder('customers')
+      .update(Customer)
+      .set({
+        excluded_at: date
+      })
+      .where('id = :id', { id })
+      .execute()
   }
 })

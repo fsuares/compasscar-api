@@ -42,4 +42,14 @@ customersRouter.get(
   customersController.show
 )
 
+customersRouter.delete(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
+  customersController.delete
+)
+
 export default customersRouter
