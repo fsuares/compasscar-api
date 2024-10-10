@@ -17,5 +17,5 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - ~/docker/compasscar:/var/lib/postgresql/data
+      - D:/docker/compasscar:/var/lib/postgresql/data
       # Antes do : é o caminho da máquina e depois é o caminho no container
