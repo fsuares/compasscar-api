@@ -18,7 +18,7 @@ export default function authMiddleware(
   try {
     const JWT_SECRET = process.env.JWT_SECRET as string
     const decoded = jwt.verify(token, JWT_SECRET) as JwtPayload
-    req['userId'] = decoded.sub /// entender esse erro
+    // req.['userId'] = decoded.sub /// entender esse erro
     req.userId = decoded.sub
     next()
   } catch (error) {
