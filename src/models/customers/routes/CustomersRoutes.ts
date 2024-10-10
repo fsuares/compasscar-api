@@ -6,6 +6,8 @@ import CustomersController from '../../../controllers/CustomersController'
 const customersRouter = Router()
 const customersController = new CustomersController()
 
+customersRouter.get('/', customersController.index)
+
 customersRouter.post(
   '/',
   celebrate({
