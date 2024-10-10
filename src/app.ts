@@ -1,12 +1,13 @@
 import 'reflect-metadata'
 import 'express-async-errors'
 import cors from 'cors'
-import express, { Request, Response, NextFunction } from 'express'
+import express, { Router, Request, Response, NextFunction } from 'express'
 import { errors } from 'celebrate'
-import { Router } from 'express'
 import AppError from '@errors/AppError'
 import carsRouter from '@cars/routes/cars.routes'
 import ordersRouter from '@orders/routes/order.routes'
+import customersRouter from '@customers/routes/CustomersRoutes'
+
 
 export const app = express()
 const routes = Router()
@@ -16,6 +17,7 @@ app.use(cors())
 
 routes.use('/cars', carsRouter)
 routes.use('/orders', ordersRouter)
+routes.use('/customers', customersRouter)
 
 app.use(routes)
 
