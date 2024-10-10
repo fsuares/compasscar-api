@@ -6,6 +6,8 @@ import CustomersController from '../../../controllers/CustomersController'
 const customersRouter = Router()
 const customersController = new CustomersController()
 
+customersRouter.get('/', customersController.index)
+
 customersRouter.post(
   '/',
   celebrate({
@@ -40,6 +42,16 @@ customersRouter.get(
     }
   }),
   customersController.show
+)
+
+customersRouter.delete(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
+  customersController.delete
 )
 
 export default customersRouter
