@@ -6,6 +6,7 @@ import { errors } from 'celebrate'
 import { Router } from 'express'
 import AppError from '@errors/AppError'
 import carsRouter from '@cars/routes/cars.routes'
+import ordersRouter from '@orders/routes/order.routes'
 
 export const app = express()
 const routes = Router()
@@ -14,6 +15,7 @@ app.use(express.json())
 app.use(cors())
 
 routes.use('/cars', carsRouter)
+routes.use('/orders', ordersRouter)
 
 app.use(routes)
 
