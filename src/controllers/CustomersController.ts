@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 import { CreateCustomerService } from '@customers/services/CreateCustomerService'
+import { ShowCustomerService } from '@customers/services/ShowCustomerService'
 
 export default class CustomersController {
   public async create(req: Request, res: Response): Promise<any> {
@@ -16,5 +17,17 @@ export default class CustomersController {
     })
 
     return res.status(201).json(customer)
+  }
+
+  public async show(req: Request, res: Response): Promise<any> {
+    const { id } = req.params
+
+    const showCustomer = new ShowCustomerService()
+
+    const customer = await showCustomer.execute({
+      id
+    })
+
+    return res.status(200).json(customer)
   }
 }
