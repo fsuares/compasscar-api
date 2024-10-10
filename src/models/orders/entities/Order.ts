@@ -5,10 +5,10 @@ import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
-  OneToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne
+  ManyToOne,
+  JoinColumn
 } from 'typeorm'
 
 @Entity('orders')
@@ -16,18 +16,20 @@ export class Order {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
-  @OneToOne(() => Customer, (customer) => customer.id)
-  customer_id: Customer
+  @ManyToOne(() => Customer, (customer) => customer.orders)
+  @JoinColumn({ name: 'customer_id' })
+  customer: Customer
 
-  @CreateDateColumn()
-  created_at: Date
+  @ManyToOne(() => Car, (car) => car.orders)
+  @JoinColumn({ name: 'car_id' })
+  car: Car
 
   @Column({
     type: 'enum',
     enum: OrderStatus,
     default: OrderStatus.OPEN
   })
-  status: string
+  status: OrderStatus
 
   @Column()
   cep: string
@@ -44,8 +46,8 @@ export class Order {
   @Column({ type: 'float' })
   total_value: number
 
-  @ManyToOne(() => Car, (car) => car.id)
-  car_id: Car
+  @CreateDateColumn()
+  created_at: Date
 
   @Column()
   start_date: Date
@@ -53,13 +55,13 @@ export class Order {
   @Column()
   end_date: Date
 
-  @Column()
+  @Column({ nullable: true })
   cancel_date: Date
 
-  @Column()
+  @Column({ nullable: true })
   closed_date: Date
 
-  @Column({ type: 'float' })
+  @Column({ type: 'float', nullable: true })
   penalty_value: number
 
   @UpdateDateColumn()

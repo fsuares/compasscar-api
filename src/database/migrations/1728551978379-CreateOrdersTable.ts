@@ -24,9 +24,8 @@ export class CreateOrdersTable1728551978379 implements MigrationInterface {
             type: 'uuid'
           },
           {
-            name: 'created_at',
-            type: 'timestamp with time zone',
-            default: 'now()'
+            name: 'car_id',
+            type: 'uuid'
           },
           {
             name: 'status',
@@ -55,8 +54,9 @@ export class CreateOrdersTable1728551978379 implements MigrationInterface {
             type: 'float'
           },
           {
-            name: 'car_id',
-            type: 'uuid'
+            name: 'created_at',
+            type: 'timestamp with time zone',
+            default: 'now()'
           },
           {
             name: 'start_date',
@@ -68,15 +68,21 @@ export class CreateOrdersTable1728551978379 implements MigrationInterface {
           },
           {
             name: 'cancel_date',
-            type: 'timestamp with time zone'
+            type: 'timestamp with time zone',
+            isNullable: true,
+            default: null
           },
           {
             name: 'closed_date',
-            type: 'timestamp with time zone'
+            type: 'timestamp with time zone',
+            isNullable: true,
+            default: null
           },
           {
             name: 'penalty_value',
-            type: 'float'
+            type: 'float',
+            isNullable: true,
+            default: null
           },
           {
             name: 'updated_at',
@@ -109,6 +115,8 @@ export class CreateOrdersTable1728551978379 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
+    await queryRunner.dropForeignKey('orders', 'FK_orders_customer_id')
+    await queryRunner.dropForeignKey('orders', 'FK_orders_car_id')
     await queryRunner.dropTable('orders')
   }
 }
