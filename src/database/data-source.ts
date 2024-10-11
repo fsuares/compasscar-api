@@ -5,9 +5,11 @@ import { DataSource } from 'typeorm'
 import { Car } from '../models/cars/entities/Car'
 import { User } from '../models/users/entities/User'
 import { Customer } from '../models/customers/entities/Customer'
+import { Order } from '../models/orders/entities/Order'
 
 import { CreateUsersTable1728394270904 } from './migrations/1728394270904-CreateUsersTable'
 import { CreateCarsTable1728411042792 } from './migrations/1728411042792-CreateCarsTable'
+import { CreateOrdersTable1728551978379 } from './migrations/1728551978379-CreateOrdersTable'
 import { CreateCustomers1728413724717 } from './migrations/1728413724717-CreateCustomers'
 
 export const dataSource = new DataSource({
@@ -19,10 +21,11 @@ export const dataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: false,
   logging: false,
-  entities: [User, Car, Customer],
+  entities: [User, Car, Order, Customer],
   migrations: [
     CreateUsersTable1728394270904,
     CreateCarsTable1728411042792,
+    CreateOrdersTable1728551978379,
     CreateCustomers1728413724717
   ],
   subscribers: []
