@@ -5,24 +5,15 @@ import jwt, { JwtPayload } from 'jsonwebtoken'
 import AuthServiceInterface, {
   UserLogin,
   Authenticated
-} from '../interface/controller-auth.interface'
+} from '../interface/AuthControllerInterface'
 import AppError from '@errors/AppError'
 import { IsNull } from 'typeorm'
-import AuthRepositoryInterface from '@auth/interface/repository.auth.interface'
-import ChecksTypesAndNull from '@utilsModels/ChecksTypesAndNull'
+import AuthRepositoryInterface from '@auth/interface/AuthRepositoryInterface'
 
 export default class AuthService implements AuthServiceInterface {
   constructor(private authRepository: AuthRepositoryInterface) {}
 
   async login(user: UserLogin): Promise<Authenticated> {
-    if (ChecksTypesAndNull(user.email)) {
-      throw new AppError('invalid email or password', 403)
-    }
-
-    if (ChecksTypesAndNull(user.password)) {
-      throw new AppError('invalid email or password', 403)
-    }
-
     const userRepository = await this.authRepository.getUserActiveByEmail(
       user.email
     )

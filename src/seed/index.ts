@@ -1,2 +1,2 @@
-import UserSeed from './user.seed'
+import UserSeed from './UserSeed'
 UserSeed.execute()

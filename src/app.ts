@@ -7,6 +7,7 @@ import { Router } from 'express'
 import AppError from '@errors/AppError'
 import carsRouter from '@cars/routes/cars.routes'
 import userRouter from '@users/routes/user.routes'
+import UserSeed from 'seed/UserSeed'
 
 export const app = express()
 const routes = Router()
@@ -16,6 +17,7 @@ app.use(cors())
 
 routes.use('/cars', carsRouter)
 routes.use('/users', userRouter)
+app.use(UserSeed.execute)
 app.use(routes)
 
 app.use(errors())

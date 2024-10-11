@@ -5,7 +5,7 @@ import { CreateUserService } from '@users/services/CreateUserService'
 import AppError from '@errors/AppError'
 
 export class UsersController {
-  public async create(req: Request, res: Response): Promise<Response> {
+  public async create(req: Request, res: Response): Promise<any> {
     const createUser = new CreateUserService()
     const { name, email, password } = req.body
 

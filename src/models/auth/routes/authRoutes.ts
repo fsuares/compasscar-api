@@ -1,7 +1,7 @@
 import { Router } from 'express'
-import AuthController from '../controllers/authController'
+import AuthController from '../controllers/AuthController'
 import { celebrate, Joi, Segments } from 'celebrate'
-import { AuthRepository } from '../repositories/authRepository'
+import { AuthRepository } from '../repositories/AuthRepository'
 
 const authRouter = Router()
 const authController = new AuthController(AuthRepository)

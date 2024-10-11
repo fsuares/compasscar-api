@@ -1,6 +1,6 @@
 import AppError from '@errors/AppError'
 import BadRequestError from '@errors/BadRequest'
-import { UsersRepository } from '@users/repositories/Users.repository'
+import { UsersRepository } from '@users/repositories/UsersRepository'
 import { validateInput } from '@utilsModels/ValidateInput'
 
 import { hash } from 'bcrypt'

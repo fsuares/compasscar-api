@@ -1,5 +1,5 @@
 import AppError from '@errors/AppError'
-import { UsersRepository } from '@users/repositories/Users.repository'
+import { UsersRepository } from '@users/repositories/UsersRepository'
 
 export class FindyByIdUserService {
   public async execute(id: string) {
