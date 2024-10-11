@@ -26,7 +26,7 @@ export const CarsRepository = dataSource.getRepository(Car).extend({
   async findByPlate(license_plate: string) {
     return this.createQueryBuilder('cars')
       .where('cars.license_plate = :license_plate', { license_plate })
-      .getOne()
+      .getMany()
   },
 
   async findByID(id: string) {
