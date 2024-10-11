@@ -9,15 +9,8 @@ export class UsersController {
     const createUser = new CreateUserService()
     const { name, email, password } = req.body
 
-    try {
       const userId = await createUser.execute({ name, email, password })
       return res.status(201).json(userId)
-    } catch (error) {
-      if (error instanceof AppError) {
-        return res.status(error.statusCode).json({ error: error.message })
-      }
-      return res.status(500).json({ error: 'internal server error' })
-    }
   }
 
   public async findById(req: Request, res: Response): Promise<any> {
