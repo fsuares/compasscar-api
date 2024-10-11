@@ -1,6 +1,6 @@
 {
   "compilerOptions": {
-    "target": "es5",
+    "target": "ES2022",
     "module": "commonjs",
     "lib": ["es6"],
     "allowJs": true,
@@ -14,18 +14,19 @@
     "emitDecoratorMetadata": true,
     "resolveJsonModule": true,
     "skipLibCheck": true,
+    "typeRoots": ["@types", "./node_modules/@types", "./src/types"],
     "forceConsistentCasingInFileNames": true,
     "baseUrl": "./src",
     "paths": {
-      "@users/*": ["models/users/*"],
-      "@customers/*": ["models/customers/*"],
-      "@cars/*": ["models/cars/*"],
-      "@orders/*": ["models/orders/*"],
+      "@users/*": ["modules/users/*"],
+      "@customers/*": ["modules/customers/*"],
+      "@cars/*": ["modules/cars/*"],
+      "@orders/*": ["modules/orders/*"],
+      "@auth/*": ["modules/auth/*"],
       "@utils/*": ["database/utils/*"],
       "@datasource": ["database/data-source"],
       "@database/*": ["database/*"],
-      "@errors/*": ["errors/*"],
-      "@controllers/*": ["controllers/*"]
+      "@errors/*": ["errors/*"]
     }
   },
   "exclude": ["eslint.config.mjs"]

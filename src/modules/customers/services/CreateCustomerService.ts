@@ -1,5 +1,5 @@
-import { Customer } from '../entities/Customer'
-import { CustomersRepository } from '../repositories/CustomersRepository'
+import { Customer } from '@customers/entities/Customer'
+import { CustomersRepository } from '@customers/repositories/CustomersRepository'
 import AppError from '@errors/AppError'
 
 interface ICreateCustomer {
@@ -22,22 +22,19 @@ export class CreateCustomerService {
       await CustomersRepository.findByEmailAndCheckIfExcludedIsNull(email)
 
     if (ifEmailExists) {
-      throw new AppError(
-        'Email already exists and the customer is active.',
-        409
-      )
+      throw new AppError('Email already exists and the customer is active.')
     }
 
     const ifCpfExists =
       await CustomersRepository.findByCpfAndCheckIfExcludedIsNull(cpf)
 
     if (ifCpfExists) {
-      throw new AppError('Cpf already exists and the customer is active.', 409)
+      throw new AppError('Cpf already exists and the customer is active.')
     }
 
     const customer = CustomersRepository.create({
       name,
-      birth_date: birth_date.substring(0, 10),
+      birth_date,
       cpf,
       email,
       phone

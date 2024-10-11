@@ -1,0 +1,23 @@
+import { dataSource } from '@database/data-source'
+import { User } from '@users/entities/User'
+
+export const UsersRepository = dataSource.getRepository(User).extend({
+  async findByID(id: string) {
+    return this.createQueryBuilder('users')
+      .where('users.id = :id', { id })
+      .getOne()
+  },
+
+  async findByEmail(email: string) {
+    return this.createQueryBuilder('users')
+      .where('users.email = :email', { email })
+      .getMany()
+  },
+
+  async findByEmailAndExcludedAt(email: string) {
+    return this.createQueryBuilder('users')
+      .where('users.email = :email', { email })
+      .andWhere('excluded_at IS NULL')
+      .getMany()
+  }
+})
