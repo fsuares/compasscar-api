@@ -20,8 +20,8 @@ export class User {
   @Column()
   password: string
 
-  @Column({ type: 'timestamp', nullable: true })
-  excluded_at: Date | null
+  @Column()
+  excluded_at: Date
 
   @CreateDateColumn()
   created_at: Date

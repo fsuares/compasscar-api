@@ -1,5 +1,5 @@
 import AppError from '@errors/AppError'
-import controllerResponseError from '@errors/controller-response.error'
+import controllerResponseError from '@errors/ConttrollerResponseError'
 import { NextFunction, Request, Response } from 'express'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 

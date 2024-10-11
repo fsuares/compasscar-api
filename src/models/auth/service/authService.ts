@@ -9,7 +9,7 @@ import AuthServiceInterface, {
 import AppError from '@errors/AppError'
 import { IsNull } from 'typeorm'
 import AuthRepositoryInterface from '@auth/interface/repository.auth.interface'
-import ChecksTypesAndNull from 'models/utils/checks-types-and-null'
+import ChecksTypesAndNull from '@utilsModels/ChecksTypesAndNull'
 
 export default class AuthService implements AuthServiceInterface {
   constructor(private authRepository: AuthRepositoryInterface) {}

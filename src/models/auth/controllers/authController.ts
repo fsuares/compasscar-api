@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 import AppError from '@errors/AppError'
 import AuthServiceInterface from '../interface/controller-auth.interface'
-import controllerResponseError from '@errors/controller-response.error'
+import controllerResponseError from '@errors/ConttrollerResponseError'
 
 export default class AuthController {
   constructor(private authService: AuthServiceInterface) {}
