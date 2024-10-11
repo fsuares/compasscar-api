@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
+import UserSeed from 'seed/UserSeed'
 
 import { Car } from '../models/cars/entities/Car'
 import { User } from '../models/users/entities/User'
@@ -30,12 +31,3 @@ export const dataSource = new DataSource({
   ],
   subscribers: []
 })
-
-dataSource
-  .initialize()
-  .then(() => {
-    console.log('Data Source has been initialized!')
-  })
-  .catch((err) => {
-    console.error('Error during Data Source initialization', err)
-  })

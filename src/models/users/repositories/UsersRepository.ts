@@ -6,5 +6,18 @@ export const UsersRepository = dataSource.getRepository(User).extend({
     return this.createQueryBuilder('users')
       .where('users.id = :id', { id })
       .getOne()
+  },
+
+  async findByEmail(email: string) {
+    return this.createQueryBuilder('users')
+      .where('users.email = :email', { email })
+      .getMany()
+  },
+
+  async findByEmailAndExcludedAt(email: string) {
+    return this.createQueryBuilder('users')
+      .where('users.email = :email', { email })
+      .andWhere('excluded_at IS NULL')
+      .getMany()
   }
 })

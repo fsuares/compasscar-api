@@ -28,7 +28,8 @@ export class CreateUsersTable1728394270904 implements MigrationInterface {
           {
             name: 'excluded_at',
             type: 'timestamp with time zone',
-            default: 'null'
+            isNullable: true,
+            default: null
           },
           {
             name: 'created_at',
@@ -38,7 +39,8 @@ export class CreateUsersTable1728394270904 implements MigrationInterface {
           {
             name: 'updated_at',
             type: 'timestamp with time zone',
-            default: 'null'
+            default: 'now()',
+            onUpdate: 'now()'
           }
         ]
       })

@@ -1,14 +1,26 @@
 import 'dotenv/config'
-import '@datasource'
+import { dataSource } from '@datasource'
 import { app } from './app'
+import UserSeed from 'seed/UserSeed'
 
-const port = process.env.PORT || 3003
+async function bootstrap() {
+  try {
+    await dataSource.initialize()
+    console.log('Data Source has been initialized!')
+    await UserSeed.execute()
+    const port = process.env.PORT || 3003
 
-const server = app.listen(port, () => {
-  console.log(`App started on port ${port}`)
-})
+    const server = app.listen(port, () => {
+      console.log(`App started on port ${port}`)
+    })
 
-process.on('SIGINT', () => {
-  server.close()
-  console.log('App finished')
-})
+    process.on('SIGINT', () => {
+      server.close()
+      console.log('App finished')
+    })
+  } catch (error) {
+    console.error('Error during Data Source initialization', error)
+  }
+}
+
+bootstrap()
