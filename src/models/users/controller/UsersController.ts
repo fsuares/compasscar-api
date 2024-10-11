@@ -6,6 +6,7 @@ export class UsersController {
   public async create(req: Request, res: Response): Promise<any> {
     const createUser = new CreateUserService()
     const { name, email, password } = req.body
+
     const userId = await createUser.execute({ name, email, password })
     return res.status(201).json(userId)
   }
