@@ -1,10 +1,11 @@
 import { Router } from 'express'
 import AuthController from '../controllers/AuthController'
 import { celebrate, Joi, Segments } from 'celebrate'
-import { AuthRepository } from '../repositories/AuthRepository'
+import AuthService from '@auth/service/authService'
 
 const authRouter = Router()
-const authController = new AuthController(AuthRepository)
+const authService = new AuthService()
+const authController = new AuthController(authService)
 
 authRouter.post(
   '/login',

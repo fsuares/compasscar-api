@@ -6,22 +6,22 @@ import { errors } from 'celebrate'
 import AppError from '@errors/AppError'
 import carsRouter from '@cars/routes/cars.routes'
 import userRouter from '@users/routes/user.routes'
-import UserSeed from 'seed/UserSeed'
 import ordersRouter from '@orders/routes/order.routes'
 import customersRouter from '@customers/routes/CustomersRoutes'
+import authRouter from '@auth/routes/authRoutes'
+import authMiddleware from '@auth/middleware/AuthMiddleware'
 
 export const app = express()
 const routes = Router()
 
 app.use(express.json())
 app.use(cors())
-app.use(UserSeed.execute)
 
 routes.use('/cars', carsRouter)
-routes.use('/users', userRouter)
+routes.use('/users', authMiddleware, userRouter)
 routes.use('/orders', ordersRouter)
 routes.use('/customers', customersRouter)
-
+routes.use('/auth', authRouter) // rota publica sem proteção
 app.use(routes)
 
 app.use(errors())

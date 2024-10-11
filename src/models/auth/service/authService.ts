@@ -1,5 +1,3 @@
-import { User } from '@users/entities/User'
-import { dataSource } from '@database/data-source'
 import bcrypt from 'bcrypt'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 import AuthServiceInterface, {
@@ -7,33 +5,28 @@ import AuthServiceInterface, {
   Authenticated
 } from '../interface/AuthControllerInterface'
 import AppError from '@errors/AppError'
-import { IsNull } from 'typeorm'
-import AuthRepositoryInterface from '@auth/interface/AuthRepositoryInterface'
+import { UsersRepository } from '@users/repositories/UsersRepository'
 
 export default class AuthService implements AuthServiceInterface {
-  constructor(private authRepository: AuthRepositoryInterface) {}
-
   async login(user: UserLogin): Promise<Authenticated> {
-    const userRepository = await this.authRepository.getUserActiveByEmail(
-      user.email
-    )
+    const userRepository = await UsersRepository.findByEmail(user.email)
 
-    if (!userRepository) {
-      throw new AppError('Invalid credentials', 401)
+    if (!userRepository.length || userRepository[0].excluded_at) {
+      throw new AppError('invalid email or password', 401)
     }
 
     const isPasswordValid = await bcrypt.compare(
       user.password,
-      userRepository.password
+      userRepository[0].password
     )
 
     if (!isPasswordValid) {
-      throw new AppError('Invalid email or password', 401)
+      throw new AppError('invalid email or password', 401)
     }
 
     const jwtSecret = process.env.JWT_SECRET as string
-    const token = jwt.sign({ id: userRepository.id }, jwtSecret, {
-      expiresIn: '10m'
+    const token = jwt.sign({ id: userRepository[0].id }, jwtSecret, {
+      expiresIn: process.env.JWT_EXPIRES_IN || '10m'
     })
     const data = jwt.decode(token) as JwtPayload
     const expiresIn = data.exp as number

@@ -1,5 +1,4 @@
 import AppError from '@errors/AppError'
-import controllerResponseError from '@errors/ConttrollerResponseError'
 import { NextFunction, Request, Response } from 'express'
 import jwt, { JwtPayload } from 'jsonwebtoken'
 
@@ -21,6 +20,6 @@ export default function authMiddleware(
     req.userId = decoded.sub
     next()
   } catch (error) {
-    controllerResponseError(res, error, 'Invalid token')
+    throw new AppError('invalid token', 401)
   }
 }
