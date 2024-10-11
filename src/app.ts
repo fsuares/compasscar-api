@@ -17,10 +17,10 @@ const routes = Router()
 app.use(express.json())
 app.use(cors())
 
-routes.use('/cars', carsRouter)
+routes.use('/cars', authMiddleware, carsRouter)
 routes.use('/users', authMiddleware, userRouter)
-routes.use('/orders', ordersRouter)
-routes.use('/customers', customersRouter)
+routes.use('/orders', authMiddleware, ordersRouter)
+routes.use('/customers', authMiddleware, customersRouter)
 routes.use('/auth', authRouter) // rota publica sem proteção
 app.use(routes)
 
