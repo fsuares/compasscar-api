@@ -1,12 +1,12 @@
 import 'dotenv/config'
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
-import UserSeed from 'seed/UserSeed'
+import UserSeed from './seed/UserSeed'
 
-import { Car } from '../models/cars/entities/Car'
-import { User } from '../models/users/entities/User'
-import { Customer } from '../models/customers/entities/Customer'
-import { Order } from '../models/orders/entities/Order'
+import { Car } from '../modules/cars/entities/Car'
+import { User } from '../modules/users/entities/User'
+import { Customer } from '../modules/customers/entities/Customer'
+import { Order } from '../modules/orders/entities/Order'
 
 import { CreateUsersTable1728394270904 } from './migrations/1728394270904-CreateUsersTable'
 import { CreateCarsTable1728411042792 } from './migrations/1728411042792-CreateCarsTable'

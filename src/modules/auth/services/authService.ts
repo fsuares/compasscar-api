@@ -3,7 +3,7 @@ import jwt, { JwtPayload } from 'jsonwebtoken'
 import AuthServiceInterface, {
   UserLogin,
   Authenticated
-} from '../interface/AuthControllerInterface'
+} from '../interfaces/AuthControllerInterface'
 import AppError from '@errors/AppError'
 import { UsersRepository } from '@users/repositories/UsersRepository'
 

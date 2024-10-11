@@ -9,7 +9,7 @@ import userRouter from '@users/routes/user.routes'
 import ordersRouter from '@orders/routes/order.routes'
 import customersRouter from '@customers/routes/CustomersRoutes'
 import authRouter from '@auth/routes/authRoutes'
-import authMiddleware from '@auth/middleware/AuthMiddleware'
+import authMiddleware from '@auth/middlewares/authMiddleware'
 
 export const app = express()
 const routes = Router()

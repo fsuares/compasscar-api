@@ -1,5 +1,5 @@
-import { Customer } from '../entities/Customer'
-import { CustomersRepository } from '../repositories/CustomersRepository'
+import { Customer } from '@customers/entities/Customer'
+import { CustomersRepository } from '@customers/repositories/CustomersRepository'
 import AppError from '@errors/AppError'
 
 interface ICreateCustomer {
