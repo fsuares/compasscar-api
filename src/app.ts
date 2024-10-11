@@ -22,6 +22,7 @@ routes.use('/users', authMiddleware, userRouter)
 routes.use('/orders', authMiddleware, ordersRouter)
 routes.use('/customers', authMiddleware, customersRouter)
 routes.use('/auth', authRouter) // rota publica sem proteção
+
 app.use(routes)
 
 app.use(errors())
