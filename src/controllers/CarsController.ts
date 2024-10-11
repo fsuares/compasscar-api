@@ -41,7 +41,7 @@ export default class CarsController {
 
   public async delete(req: Request, res: Response): Promise<any> {
     const { id } = req.params
-    const deleteCar = new DeleteCarService().execute(id)
+    await new DeleteCarService().execute(id)
     return res.status(204).send()
   }
 }
