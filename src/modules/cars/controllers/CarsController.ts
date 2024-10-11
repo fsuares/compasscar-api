@@ -3,6 +3,7 @@ import { CreateCarsService } from '@cars/services/CreateCarService'
 import { ShowCarService } from '@cars/services/ShowCarService'
 import { ListCarService } from '@cars/services/ListCarsService'
 import { DeleteCarService } from '@cars/services/DeleteCarService'
+import { UpdateCarService } from '@cars/services/UpdateCarService'
 
 export default class CarsController {
   public async index(req: Request, res: Response): Promise<any> {
@@ -44,4 +45,23 @@ export default class CarsController {
     await new DeleteCarService().execute(id)
     return res.status(204).send()
   }
+
+  public async update(req: Request, res: Response): Promise<any> {
+    const { license_plate, brand, model, km, year, price, items, status } = req.body
+    const { id } = req.params
+    const updateCar = new UpdateCarService()
+    const car = await updateCar.execute({
+      id,
+      license_plate,
+      brand,
+      model,
+      km,
+      year,
+      price,
+      items,
+      status
+    })
+    return res.status(201).json(car)
+  }
+
 }
