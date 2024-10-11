@@ -6,14 +6,14 @@ import { dataSource } from '@database/data-source'
 import { Customer } from '@customers/entities/Customer'
 
 export const CustomersRepository = dataSource.getRepository(Customer).extend({
-  findByEmailAndCheckIfExcludedIsNull(email: string) {
+  findByEmailAndCheckIfExcludedIsNull(email: string | undefined) {
     return this.createQueryBuilder('customers')
       .where('customers.email = :email', { email })
       .andWhere('customers.excluded_at IS NULL')
       .getOne()
   },
 
-  findByCpfAndCheckIfExcludedIsNull(cpf: string) {
+  findByCpfAndCheckIfExcludedIsNull(cpf: string | undefined) {
     return this.createQueryBuilder('customers')
       .where('customers.cpf = :cpf', { cpf })
       .andWhere('customers.excluded_at IS NULL')
