@@ -7,6 +7,6 @@ export class DeleteCarService {
     if (!car) {
       throw new AppError('Car not found', 404)
     }
-    await CarsRepository.delete(id)
+    await CarsRepository.deleteCar(id)
   }
 }

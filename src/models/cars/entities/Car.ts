@@ -1,10 +1,12 @@
+import { Order } from '../../orders/entities/Order'
 import { CarStatus } from '../../../database/utils/car.status.enum'
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  UpdateDateColumn
+  UpdateDateColumn,
+  OneToMany
 } from 'typeorm'
 
 @Entity('cars')
@@ -45,4 +47,7 @@ export class Car {
 
   @UpdateDateColumn()
   updated_at: Date
+
+  @OneToMany(() => Order, (orders) => orders.car)
+  orders: Order[]
 }
