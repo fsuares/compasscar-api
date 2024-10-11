@@ -1,7 +1,7 @@
 import { Router } from 'express'
 import { celebrate, Joi, Segments } from 'celebrate'
-import isValidCpf from 'middlewares/isValidCpf'
-import CustomersController from '../../../controllers/CustomersController'
+import isValidCpf from '@customers/middlewares/isValidCpf'
+import CustomersController from '@customers/controllers/CustomersController'
 
 const customersRouter = Router()
 const customersController = new CustomersController()

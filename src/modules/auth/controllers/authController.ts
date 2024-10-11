@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import AuthServiceInterface from '../interface/AuthControllerInterface'
+import AuthServiceInterface from '@auth/interfaces/AuthControllerInterface'
 import controllerResponseError from '@errors/ConttrollerResponseError'
 
 export default class AuthController {
