@@ -1,7 +1,8 @@
 import { Router } from 'express'
-import { celebrate, Joi, Segments } from 'celebrate'
+import { celebrate, isCelebrateError, Joi, Segments } from 'celebrate'
 import OrdersController from '@orders/controllers/OrdersController'
 import { OrderStatus } from '@utils/order.status.enum'
+import AppError from '@errors/AppError'
 
 const ordersRouter = Router()
 const ordersController = new OrdersController()
@@ -37,5 +38,14 @@ ordersRouter.patch(
   }),
   ordersController.update
 )
+ordersRouter.use((error: Error): any => {
+  if (isCelebrateError(error)) {
+    console.log('entrou', error)
+    const errorMessage =
+      error.details.get('params')?.details[0].message || 'Invalid parameters'
+    const statusCode = 400
+    throw new AppError(errorMessage, statusCode)
+  }
+})
 
 export default ordersRouter

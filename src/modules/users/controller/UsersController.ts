@@ -19,7 +19,7 @@ export class UsersController {
     return res.status(200).json(user)
   }
 
-  public async update(req: Request, res: Response): Promise<any> {
+  public async update(req: Request, res: Response): Promise<string | any> {
     const id = req.params.id
     const { name, email, password } = req.body
     const updateUser = new UpdateUserService()

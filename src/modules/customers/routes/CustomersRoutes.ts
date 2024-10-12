@@ -1,7 +1,8 @@
 import { Router } from 'express'
-import { celebrate, Joi, Segments } from 'celebrate'
+import { celebrate, isCelebrateError, Joi, Segments } from 'celebrate'
 import isValidCpf from '@customers/middlewares/isValidCpf'
 import CustomersController from '@customers/controllers/CustomersController'
+import AppError from '@errors/AppError'
 
 const customersRouter = Router()
 const customersController = new CustomersController()
@@ -102,5 +103,14 @@ customersRouter.patch(
   isValidCpf,
   customersController.update
 )
+customersRouter.use((error: Error): any => {
+  if (isCelebrateError(error)) {
+    console.log('entrou', error)
+    const errorMessage =
+      error.details.get('params')?.details[0].message || 'Invalid parameters'
+    const statusCode = 400
+    throw new AppError(errorMessage, statusCode)
+  }
+})
 
 export default customersRouter
