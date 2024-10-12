@@ -1,2 +1,2 @@
 DELETE DATABASE postgres;
-CREATE DATABASE compasscar;
+CREATE  DATABASE IF NOT EXISTS compasscar;
