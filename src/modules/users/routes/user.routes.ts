@@ -1,7 +1,7 @@
 import AppError from '@errors/AppError'
 import { UsersController } from '@users/controller/UsersController'
 import { celebrate, isCelebrateError, Joi, Segments } from 'celebrate'
-import express, { Router, Request, Response, NextFunction } from 'express'
+import { Router } from 'express'
 
 const userRouter = Router()
 const userControllers = new UsersController()
@@ -9,6 +9,7 @@ const userControllers = new UsersController()
 userRouter.get('/', userControllers.listUsers)
 
 userRouter.post('/', userControllers.create)
+
 userRouter.get(
   '/:id',
   celebrate({
@@ -28,6 +29,7 @@ userRouter.patch(
   }),
   userControllers.update
 )
+
 userRouter.delete(
   '/:id',
   celebrate({
@@ -37,19 +39,14 @@ userRouter.delete(
   }),
   userControllers.delete
 )
-userRouter.use(
-  (
-    error: any | Error,
-    _req: Request,
-    res: Response,
-    next: NextFunction
-  ): any => {
-    if (isCelebrateError(error)) {
-      const errorMessage =
-        error.details.get('params')?.details[0].message || 'Invalid parameters'
-      const statusCode = 400
-      throw new AppError(errorMessage, statusCode)
-    }
+
+userRouter.use((error: Error): any => {
+  if (isCelebrateError(error)) {
+    console.log('entrou', error)
+    const errorMessage =
+      error.details.get('params')?.details[0].message || 'Invalid parameters'
+    const statusCode = 400
+    throw new AppError(errorMessage, statusCode)
   }
-)
+})
 export default userRouter
