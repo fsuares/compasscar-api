@@ -8,7 +8,7 @@ async function bootstrap() {
     await dataSource.initialize()
     console.log('Data Source has been initialized!')
     await UserSeed.execute()
-    const port = process.env.PORT || 3003
+    const port = process.env.API_PORT || 3003
 
     const server = app.listen(port, () => {
       console.log(`App started on port ${port}`)

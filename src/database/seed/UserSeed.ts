@@ -5,16 +5,16 @@ import { CreateUserService } from '@users/services/CreateUserService'
 export default class UserSeed {
   static async execute() {
     const existingUser = await UsersRepository.findByEmailAndExcludedAt(
-      process.env.DEFAULT_USER_EMAIL as string
+      process.env.SEED_USER_EMAIL as string
     )
     if (existingUser.length > 0) {
       console.log('User already exists, skipping seed.')
       return
     }
 
-    const name = process.env.DEFAULT_USER_NAME as string
-    const email = process.env.DEFAULT_USER_EMAIL as string
-    const password = process.env.DEFAULT_USER_PASSWORD as string
+    const name = process.env.SEED_USER_NAME as string
+    const email = process.env.SEED_USER_EMAIL as string
+    const password = process.env.SEED_USER_PASSWORD as string
 
     const userService = new CreateUserService()
 
