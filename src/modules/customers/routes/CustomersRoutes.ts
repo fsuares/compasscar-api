@@ -1,3 +1,5 @@
+import { Router } from 'express'
+import { celebrate, isCelebrateError, Joi, Segments } from 'celebrate'
 import { NextFunction, Router, Response, Request } from 'express'
 import { celebrate, isCelebrateError, Joi, Segments } from 'celebrate'
 import isValidCpf from '@customers/middlewares/isValidCpf'
@@ -118,6 +120,15 @@ customersRouter.patch(
   isValidCpf,
   customersController.update
 )
+customersRouter.use((error: Error): any => {
+  if (isCelebrateError(error)) {
+    console.log('entrou', error)
+    const errorMessage =
+      error.details.get('params')?.details[0].message || 'Invalid parameters'
+    const statusCode = 400
+    throw new AppError(errorMessage, statusCode)
+  }
+})
 
 customersRouter.use(
   (error: Error, _req: Request, res: Response, next: NextFunction) => {
