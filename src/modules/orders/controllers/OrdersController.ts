@@ -5,6 +5,8 @@ import { ShowOrderService } from '@orders/services/ShowOrderService'
 import { DeleteOrderService } from '@orders/services/DeleteOrderService'
 import { FindByIdOrderService } from '@orders/services/FindbyOrderService'
 import { IOrderResponse } from '@orders/interfaces/OrdersInterface'
+import { ShowOrderService } from '@orders/services/ShowOrderService'
+import { DeleteOrderService } from '@orders/services/DeleteOrderService'
 
 export default class OrdersController {
   public async create(req: Request, res: Response): Promise<string | any> {
@@ -29,7 +31,11 @@ export default class OrdersController {
     return res.status(200).json(order)
   }
 
+<<<<<<< HEAD
   public async update(req: Request, res: Response): Promise<string | any> {
+=======
+  public async update(req: Request, res: Response): Promise<any> {
+>>>>>>> 556920f (feat(orders): add show and delete methods to OrdersController)
     const { id } = req.params
     const { start_date, end_date, cep, status } = req.body
 
@@ -60,5 +66,11 @@ export default class OrdersController {
     const findByIdOrderService = new FindByIdOrderService()
     const order = await findByIdOrderService.execute(id)
     return res.status(201).json(order)
+  }
+
+  public async delete(req: Request, res: Response): Promise<any> {
+    const { id } = req.params
+    await new DeleteOrderService().execute(id)
+    return res.status(204).json()
   }
 }
