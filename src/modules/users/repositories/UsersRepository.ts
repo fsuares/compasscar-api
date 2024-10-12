@@ -26,5 +26,15 @@ export const UsersRepository = dataSource.getRepository(User).extend({
       .where('users.email = :email', { email })
       .andWhere('excluded_at IS NULL')
       .getMany()
+  },
+
+  async userSoftDelete(id: string, date: Date) {
+    return this.createQueryBuilder('users')
+      .update(User)
+      .set({
+        excluded_at: date
+      })
+      .where('id = :id', { id })
+      .execute()
   }
 })
