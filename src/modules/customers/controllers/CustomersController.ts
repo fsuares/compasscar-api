@@ -62,6 +62,6 @@ export default class CustomersController {
       email,
       phone
     })
-    return res.status(201).json(updatedCustomer)
+    return res.status(201).json(updatedCustomer.id)
   }
 }
