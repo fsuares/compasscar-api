@@ -6,9 +6,13 @@ export default function isValidCpf(
   res: Response,
   next: NextFunction
 ): void {
-  const { body } = req
+  const { cpf } = req.body
 
-  const numericCpf = body.cpf.replace('-', '')
+  if (!cpf) {
+    return next()
+  }
+
+  const numericCpf = cpf.replace('-', '')
 
   const cpfDigits = numericCpf.split('').map(Number)
 

@@ -16,8 +16,8 @@ export class Customer {
   @Column()
   name: string
 
-  @Column({ type: 'date' })
-  birth_date: Date
+  @Column()
+  birth_date: string
 
   @Column()
   cpf: string
