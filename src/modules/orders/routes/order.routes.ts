@@ -12,8 +12,6 @@ ordersRouter.post(
       customer_id: Joi.string().uuid().required(),
       car_id: Joi.string().uuid().required(),
       cep: Joi.string().required(),
-      city: Joi.string().required(),
-      uf: Joi.string().required(),
       start_date: Joi.date().required(),
       end_date: Joi.date().required()
     }

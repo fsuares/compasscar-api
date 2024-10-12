@@ -4,17 +4,16 @@ import { CarsRepository } from '@cars/repositories/CarsRepository'
 import { CustomersRepository } from '@customers/repositories/CustomersRepository'
 import { ICreateOrder } from '@orders/interfaces/OrdersInterface'
 import { feeValues } from '@orders/utils/order.fee'
+import { locale } from '@orders/utils/viacep'
 
 export class CreateOrderService {
   public async execute({
     customer_id,
     car_id,
     cep,
-    city,
-    uf,
     start_date,
     end_date
-  }: ICreateOrder & { uf: keyof typeof feeValues }): Promise<any> {
+  }: ICreateOrder): Promise<any> {
     const carOrder = await OrdersRepository.findByCar(car_id)
     carOrder.forEach((order) => {
       if (order.status === 'open' || order.status === 'approved') {
@@ -39,6 +38,13 @@ export class CreateOrderService {
       throw new AppError('Customer not found', 404)
     }
 
+    const {
+      uf,
+      localidade
+    }: { uf: keyof typeof feeValues; localidade: string } = await locale({
+      cep
+    })
+
     const total_value =
       ((end_date.getTime() - start_date.getTime()) / (1000 * 3600 * 24)) *
         car.price +
@@ -47,7 +53,7 @@ export class CreateOrderService {
     const order = await OrdersRepository.create({
       customer,
       cep,
-      city,
+      city: localidade,
       uf,
       order_fee: feeValues[uf],
       total_value,
