@@ -1,5 +1,3 @@
-import { Customer } from '@customers/entities/Customer'
-
 export interface ICreateOrder {
   customer_id: string
   car_id: string
