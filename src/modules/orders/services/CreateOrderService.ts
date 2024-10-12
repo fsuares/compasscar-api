@@ -13,7 +13,7 @@ export class CreateOrderService {
     cep,
     start_date,
     end_date
-  }: ICreateOrder & { uf: keyof typeof feeValues }): Promise<any> {
+  }: ICreateOrder): Promise<any> {
     const carOrder = await OrdersRepository.findByCar(car_id)
     carOrder.forEach((order) => {
       if (order.status === 'open' || order.status === 'approved') {
