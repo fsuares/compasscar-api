@@ -1,9 +1,35 @@
 import { Router } from 'express'
 import { celebrate, Joi, Segments } from 'celebrate'
+import { itemsUnique } from '@cars/middlewares/itemsUnique'
 import CarsController from '@cars/controllers/CarsController'
+import { CarStatus } from '@utils/car.status.enum'
 
 const carsRouter = Router()
 const carsController = new CarsController()
+
+carsRouter.post(
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      license_plate: Joi.string().required(),
+      brand: Joi.string().required(),
+      model: Joi.string().required(),
+      year: Joi.number().required(),
+      km: Joi.number().required(),
+      price: Joi.number().required(),
+      items: Joi.array()
+        .items(Joi.string())
+        .max(5)
+        .custom(itemsUnique)
+        .messages({
+          'array.unique': 'Items must be unique',
+          'array.max': 'Items must have a maximum of 5'
+        })
+        .required()
+    }
+  }),
+  carsController.create
+)
 
 carsRouter.get('/', carsController.index)
 
@@ -17,20 +43,30 @@ carsRouter.get(
   carsController.show
 )
 
-carsRouter.post(
-  '/',
+carsRouter.patch(
+  '/:id',
   celebrate({
     [Segments.BODY]: {
-      license_plate: Joi.string().required(),
-      brand: Joi.string().required(),
-      model: Joi.string().required(),
-      year: Joi.number().required(),
-      km: Joi.number().required(),
-      price: Joi.number().required(),
-      items: Joi.array().items(Joi.string())
+      license_plate: Joi.string(),
+      brand: Joi.string(),
+      model: Joi.string(),
+      year: Joi.number(),
+      km: Joi.number(),
+      price: Joi.number(),
+      items: Joi.array()
+        .items(Joi.string())
+        .max(5)
+        .custom(itemsUnique)
+        .messages({
+          'array.unique': 'Items must be unique',
+          'array.max': 'Items must have a maximum of 5'
+        }),
+      status: Joi.string()
+        .valid(CarStatus.ACTIVE, CarStatus.INACTIVE)
+        .messages({ 'any.only': 'Invalid status' })
     }
   }),
-  carsController.create
+  carsController.update
 )
 
 carsRouter.delete(
@@ -41,22 +77,6 @@ carsRouter.delete(
     }
   }),
   carsController.delete
-)
-
-carsRouter.patch('/:id',
-  celebrate({
-    [Segments.BODY]: {
-      license_plate: Joi.string(),
-      brand: Joi.string(),
-      model: Joi.string(),
-      year: Joi.number(),
-      km: Joi.number(),
-      price: Joi.number(),
-      items: Joi.array().items(Joi.string()),
-      status: Joi.string().valid('ativo', 'inativo')
-    }
-  }),
-  carsController.update
 )
 
 export default carsRouter

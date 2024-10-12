@@ -38,9 +38,9 @@ export class Car {
   @Column({
     type: 'enum',
     enum: CarStatus,
-    default: CarStatus.ATIVO
+    default: CarStatus.ACTIVE
   })
-  status: string
+  status: CarStatus
 
   @CreateDateColumn()
   created_at: Date

@@ -1,7 +1,5 @@
 import { dataSource } from '@datasource'
 import { Order } from '@orders/entities/Order'
-import { ICreateOrder } from '@orders/interfaces/OrdersInterface'
-import { create } from 'domain'
 
 export const OrdersRepository = dataSource.getRepository(Order).extend({
   async findByCustomer(customer_id: string) {

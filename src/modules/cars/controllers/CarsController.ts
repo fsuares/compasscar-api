@@ -47,7 +47,8 @@ export default class CarsController {
   }
 
   public async update(req: Request, res: Response): Promise<any> {
-    const { license_plate, brand, model, km, year, price, items, status } = req.body
+    const { license_plate, brand, model, km, year, price, items, status } =
+      req.body
     const { id } = req.params
     const updateCar = new UpdateCarService()
     const car = await updateCar.execute({
@@ -63,5 +64,4 @@ export default class CarsController {
     })
     return res.status(201).json(car)
   }
-
 }

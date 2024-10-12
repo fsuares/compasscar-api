@@ -1,5 +1,5 @@
 export enum CarStatus {
-  ATIVO = 'ativo',
-  INATIVO = 'inativo',
-  EXCLUIDO = 'excluido'
+  ACTIVE = 'active',
+  INACTIVE = 'inactive',
+  EXCLUDED = 'excluded'
 }
