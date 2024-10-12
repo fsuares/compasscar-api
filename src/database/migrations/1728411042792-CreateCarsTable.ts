@@ -46,7 +46,7 @@ export class CreateCarsTable1728411042792 implements MigrationInterface {
             name: 'status',
             type: 'enum',
             enum: Object.values(CarStatus),
-            default: `'${CarStatus.ATIVO}'`
+            default: `'${CarStatus.ACTIVE}'`
           },
           {
             name: 'created_at',

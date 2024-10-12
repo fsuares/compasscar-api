@@ -1,5 +1,6 @@
 import AppError from '@errors/AppError'
 import { CarsRepository } from '@cars/repositories/CarsRepository'
+import { CarStatus } from '@utils/car.status.enum'
 
 interface ICreateCar {
   license_plate: string
@@ -24,7 +25,7 @@ export class CreateCarsService {
     const carAlreadyExists = await CarsRepository.findByPlate(license_plate)
     if (
       carAlreadyExists &&
-      carAlreadyExists.some((car) => car.status === 'ativo')
+      carAlreadyExists.some((car) => car.status === CarStatus.ACTIVE)
     ) {
       throw new AppError('Car already exists', 409)
     }

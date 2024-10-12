@@ -1,12 +1,9 @@
 import AppError from '@errors/AppError'
 import { CarsRepository } from '@cars/repositories/CarsRepository'
-
-interface IRequest {
-  id: string
-}
+import { IRequestShow } from '@cars/interfaces/CarInterfaces'
 
 export class ShowCarService {
-  public async execute({ id }: IRequest): Promise<any> {
+  public async execute({ id }: IRequestShow): Promise<any> {
     const car = await CarsRepository.findByID(id)
     if (!car) {
       throw new AppError('Car not found', 404)

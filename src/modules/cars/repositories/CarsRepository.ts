@@ -6,7 +6,7 @@ export const CarsRepository = dataSource.getRepository(Car).extend({
   async deleteCar(id: string) {
     return this.createQueryBuilder('cars')
       .update('cars')
-      .set({ status: 'excluido' })
+      .set({ status: 'excluded' })
       .where('cars.id = :id', { id })
       .execute()
   },

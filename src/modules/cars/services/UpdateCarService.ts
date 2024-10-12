@@ -1,16 +1,7 @@
 import AppError from '@errors/AppError'
 import { CarsRepository } from '@cars/repositories/CarsRepository'
-interface IRequest {
-  id: string
-  license_plate: string
-  brand: string
-  model: string
-  km: number
-  year: number
-  price: number
-  items: string[]
-  status: string
-}
+import { IRequestUpdate } from '@cars/interfaces/CarInterfaces'
+
 export class UpdateCarService {
   public async execute({
     id,
@@ -22,7 +13,7 @@ export class UpdateCarService {
     price,
     items,
     status
-  }: IRequest): Promise<any> {
+  }: IRequestUpdate): Promise<any> {
     const car = await CarsRepository.findByID(id)
     if (!car || car.status === 'excluido') {
       throw new AppError('Car not found', 404)

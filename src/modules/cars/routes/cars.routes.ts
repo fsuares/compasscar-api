@@ -62,7 +62,7 @@ carsRouter.patch(
           'array.max': 'Items must have a maximum of 5'
         }),
       status: Joi.string()
-        .valid(CarStatus.ATIVO, CarStatus.INATIVO)
+        .valid(CarStatus.ACTIVE, CarStatus.INACTIVE)
         .messages({ 'any.only': 'Invalid status' })
     }
   }),
