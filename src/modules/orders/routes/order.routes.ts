@@ -20,6 +20,16 @@ ordersRouter.post(
   ordersController.create
 )
 
+ordersRouter.get(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
+  ordersController.show
+)
+
 ordersRouter.patch(
   '/:id',
   celebrate({
@@ -36,6 +46,16 @@ ordersRouter.patch(
     }
   }),
   ordersController.update
+)
+
+ordersRouter.delete(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
+  ordersController.delete
 )
 
 export default ordersRouter
