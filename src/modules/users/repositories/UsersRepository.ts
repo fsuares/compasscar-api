@@ -81,5 +81,15 @@ export const UsersRepository = dataSource.getRepository(User).extend({
       per_page: take,
       data: users
     }
+  },
+
+  async userSoftDelete(id: string, date: Date) {
+    return this.createQueryBuilder('users')
+      .update(User)
+      .set({
+        excluded_at: date
+      })
+      .where('id = :id', { id })
+      .execute()
   }
 })

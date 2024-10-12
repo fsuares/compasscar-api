@@ -3,12 +3,12 @@ import { FindyByIdUserService } from '@users/services/FindyByIdUserService'
 import { CreateUserService } from '@users/services/CreateUserService'
 import { UpdateUserService } from '@users/services/UpdateUserService'
 import { ListUserService } from '@users/services/ListUserService'
+import { DeleteUserService } from '@users/services/DeleteUserService'
 
 export class UsersController {
   public async create(req: Request, res: Response): Promise<string | any> {
     const createUser = new CreateUserService()
     const { name, email, password } = req.body
-
     const userId = await createUser.execute({ name, email, password })
     return res.status(201).json(userId)
   }
@@ -34,6 +34,13 @@ export class UsersController {
     const { name, email, password } = req.body
     const updateUser = new UpdateUserService()
     await updateUser.execute({ id, name, email, password })
+    return res.status(204).json({})
+  }
+
+  public async delete(req: Request, res: Response): Promise<string | any> {
+    const id = req.params.id
+    const deleteUserService = new DeleteUserService()
+    await deleteUserService.execute(id)
     return res.status(204).json({})
   }
 }
