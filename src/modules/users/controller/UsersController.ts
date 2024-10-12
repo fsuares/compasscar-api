@@ -2,8 +2,8 @@ import { Request, Response } from 'express'
 import { FindyByIdUserService } from '@users/services/FindByIdUserService'
 import { CreateUserService } from '@users/services/CreateUserService'
 import { UpdateUserService } from '@users/services/UpdateUserService'
-import { ListUserService } from '@users/services/ListUserService'
 import { DeleteUserService } from '@users/services/DeleteUserService'
+import { ListUserService } from '@users/services/ListUserService'
 
 export class UsersController {
   public async create(req: Request, res: Response): Promise<string | any> {
@@ -29,7 +29,7 @@ export class UsersController {
     return res.status(200).json(users)
   }
 
-  public async update(req: Request, res: Response): Promise<string | any> {
+  public async update(req: Request, res: Response): Promise<any> {
     const id = req.params.id
     const { name, email, password } = req.body
     const updateUser = new UpdateUserService()

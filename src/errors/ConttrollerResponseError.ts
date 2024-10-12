@@ -10,7 +10,7 @@ export default function controllerResponseError(
     res.status(err.statusCode).json({ error: err.message })
     return
   }
-  
+
   res.status(500).json({
     error: message
   })
