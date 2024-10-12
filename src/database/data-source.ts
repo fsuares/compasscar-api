@@ -1,7 +1,6 @@
 import 'dotenv/config'
 import 'reflect-metadata'
 import { DataSource } from 'typeorm'
-import UserSeed from './seed/UserSeed'
 
 import { Car } from '../modules/cars/entities/Car'
 import { User } from '../modules/users/entities/User'
@@ -16,11 +15,10 @@ import { CustomersAlterColumnBirthDate1728673337247 } from './migrations/1728673
 
 export const dataSource = new DataSource({
   type: 'postgres',
-  host: process.env.DB_HOST,
-  port: 5432,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS,
-  database: process.env.DB_NAME,
+  url: process.env.DATABASE_URL,
+  username: process.env.POSTGRES_USER,
+  password: process.env.POSTGRES_PASSWORD,
+  database: process.env.POSTGRES_DB,
   synchronize: false,
   logging: false,
   entities: [User, Car, Order, Customer],
