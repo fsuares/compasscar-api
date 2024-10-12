@@ -7,15 +7,9 @@ export type User = {
   created_at: Date
   updated_at: Date
 }
-export type UserCreate = Omit<
-  User,
-  'id' | 'password' | 'excluded_at' | 'created_at' | 'updated_at'
->
 
-export type IUpdateUser = Omit<
-  User,
-  'excluded_at' | 'created_at' | 'updated_at'
->
-export default interface IUserServiceInterface {
-  create(user: UserCreate): Promise<string>
-}
+export interface ICreateUser
+  extends Omit<User, 'id' | 'excluded_at' | 'created_at' | 'updated_at'> {}
+
+export interface IUpdateUser
+  extends Omit<User, 'excluded_at' | 'created_at' | 'updated_at'> {}
