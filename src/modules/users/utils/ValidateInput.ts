@@ -1,8 +1,4 @@
-interface ICreateUser {
-  name?: string
-  email?: string
-  password?: string
-}
+import { ICreateUser } from '@users/interface/UserInterfaces'
 
 function isEmpty(value: string | undefined): boolean {
   return !value

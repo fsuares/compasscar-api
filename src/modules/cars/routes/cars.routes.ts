@@ -1,8 +1,9 @@
 import { Router } from 'express'
-import { celebrate, Joi, Segments } from 'celebrate'
+import { celebrate, isCelebrateError, Joi, Segments } from 'celebrate'
 import { itemsUnique } from '@cars/middlewares/itemsUnique'
 import CarsController from '@cars/controllers/CarsController'
 import { CarStatus } from '@utils/car.status.enum'
+import AppError from '@errors/AppError'
 
 const carsRouter = Router()
 const carsController = new CarsController()
@@ -78,5 +79,13 @@ carsRouter.delete(
   }),
   carsController.delete
 )
-
+carsRouter.use((error: Error): any => {
+  if (isCelebrateError(error)) {
+    console.log('entrou', error)
+    const errorMessage =
+      error.details.get('params')?.details[0].message || 'Invalid parameters'
+    const statusCode = 400
+    throw new AppError(errorMessage, statusCode)
+  }
+})
 export default carsRouter
