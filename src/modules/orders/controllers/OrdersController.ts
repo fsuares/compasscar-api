@@ -1,6 +1,8 @@
 import { Request, Response } from 'express'
 import { CreateOrderService } from '@orders/services/CreateOrderService'
 import { UpdateOrderService } from '@orders/services/UpdateOrderService'
+import { ShowOrderService } from '@orders/services/ShowOrderService'
+import { DeleteOrderService } from '@orders/services/DeleteOrderService'
 
 export default class OrdersController {
   public async create(req: Request, res: Response): Promise<any> {
@@ -18,6 +20,13 @@ export default class OrdersController {
     return res.status(201).json(order)
   }
 
+  public async show(req: Request, res: Response): Promise<any> {
+    const { id } = req.params
+    const showOrder = new ShowOrderService()
+    const order = await showOrder.execute(id)
+    return res.status(200).json(order)
+  }
+
   public async update(req: Request, res: Response): Promise<any> {
     const { id } = req.params
     const { start_date, end_date, cep, status } = req.body
@@ -33,5 +42,11 @@ export default class OrdersController {
     })
 
     return res.status(200).json(order)
+  }
+
+  public async delete(req: Request, res: Response): Promise<any> {
+    const { id } = req.params
+    await new DeleteOrderService().execute(id)
+    return res.status(204).json()
   }
 }
