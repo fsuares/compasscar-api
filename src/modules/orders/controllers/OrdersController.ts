@@ -1,10 +1,10 @@
 import { Request, Response } from 'express'
 import { CreateOrderService } from '@orders/services/CreateOrderService'
+import { UpdateOrderService } from '@orders/services/UpdateOrderService'
 
 export default class OrdersController {
   public async create(req: Request, res: Response): Promise<any> {
-    const { customer_id, car_id, cep, city, uf, start_date, end_date } =
-      req.body
+    const { customer_id, car_id, cep, start_date, end_date } = req.body
 
     const createOrder = new CreateOrderService()
 
@@ -12,11 +12,26 @@ export default class OrdersController {
       customer_id,
       car_id,
       cep,
-      city,
-      uf,
       start_date,
       end_date
     })
     return res.status(201).json(order)
+  }
+
+  public async update(req: Request, res: Response): Promise<any> {
+    const { id } = req.params
+    const { start_date, end_date, cep, status } = req.body
+
+    const updateOrder = new UpdateOrderService()
+
+    const order = await updateOrder.execute({
+      id,
+      start_date,
+      end_date,
+      cep,
+      status
+    })
+
+    return res.status(200).json(order)
   }
 }
