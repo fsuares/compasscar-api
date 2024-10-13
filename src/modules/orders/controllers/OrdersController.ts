@@ -63,4 +63,4 @@ export default class OrdersController {
     await new DeleteOrderService().execute(id)
     return res.status(204).send()
   }
-}
+
