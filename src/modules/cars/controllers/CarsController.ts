@@ -4,7 +4,6 @@ import { ShowCarService } from '@cars/services/ShowCarService'
 import { ListCarService } from '@cars/services/ListCarsService'
 import { DeleteCarService } from '@cars/services/DeleteCarService'
 import { UpdateCarService } from '@cars/services/UpdateCarService'
-import { log } from 'console'
 
 export default class CarsController {
   public async create(req: Request, res: Response): Promise<Response> {
@@ -35,12 +34,6 @@ export default class CarsController {
     const updateCar = new UpdateCarService()
     const car = await updateCar.execute({ id, ...req.body })
     return res.status(200).json(car)
-  }
-
-  public async delete(req: Request, res: Response): Promise<Response> {
-    const { id } = req.params
-    await new DeleteCarService().execute(id)
-    return res.status(204).send()
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
