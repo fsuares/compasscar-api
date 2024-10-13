@@ -9,7 +9,7 @@ export class UsersController {
     const createUser = new CreateUserService()
     const { name, email, password } = req.body
     const userId = await createUser.execute({ name, email, password })
-    return res.status(201).json(userId)
+    return res.status(201).json({ userId })
   }
 
   public async findById(req: Request, res: Response): Promise<string | any> {
@@ -22,15 +22,18 @@ export class UsersController {
   public async update(req: Request, res: Response): Promise<string | any> {
     const id = req.params.id
     const { name, email, password } = req.body
-    const updateUser = new UpdateUserService()
-    await updateUser.execute({ id, name, email, password })
-    return res.status(204).json({})
+    const updateUser = await new UpdateUserService().execute({
+      id,
+      name,
+      email,
+      password
+    })
+    return res.status(204).send()
   }
 
   public async delete(req: Request, res: Response): Promise<string | any> {
     const id = req.params.id
-    const deleteUserService = new DeleteUserService()
-    await deleteUserService.execute(id)
-    return res.status(204).json({})
+    await new DeleteUserService().execute(id)
+    return res.status(204).send()
   }
 }
