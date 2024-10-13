@@ -80,35 +80,32 @@ ordersRouter.get(
     }
   }),
   ordersController.findById
-
-ordersRouter.delete(
-  '/:id',
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required()
-    }
-  }),
-  ordersController.delete
-
-)
-
-ordersRouter.get('/', ordersController.findAll)
-
-ordersRouter.use(
-  (error: Error, _req: Request, res: Response, next: NextFunction) => {
-    if (isCelebrateError(error)) {
-      const errorDetails =
-        error.details.get('params') ||
-        error.details.get('body') ||
-        error.details.get('query')
-      if (errorDetails) {
-        const errorMessage = errorDetails.details[0].message
-        const statusCode = 400
-        throw new AppError(errorMessage, statusCode)
+),
+  ordersRouter.delete(
+    '/:id',
+    celebrate({
+      [Segments.PARAMS]: {
+        id: Joi.string().uuid().required()
       }
+    }),
+    ordersController.delete
+  ),
+  ordersRouter.get('/', ordersController.findAll),
+  ordersRouter.use(
+    (error: Error, _req: Request, res: Response, next: NextFunction) => {
+      if (isCelebrateError(error)) {
+        const errorDetails =
+          error.details.get('params') ||
+          error.details.get('body') ||
+          error.details.get('query')
+        if (errorDetails) {
+          const errorMessage = errorDetails.details[0].message
+          const statusCode = 400
+          throw new AppError(errorMessage, statusCode)
+        }
+      }
+      next(error)
     }
-    next(error)
-  }
-)
+  )
 
 export default ordersRouter
