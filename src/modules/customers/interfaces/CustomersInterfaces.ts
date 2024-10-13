@@ -13,9 +13,22 @@ export interface ICustomerPaginate {
   data: Customer[]
 }
 
-export interface ISearchParams {
-  page: number
+export interface ISearchParams extends Omit<IListParams, 'limit'> {
   skip: number
   take: number
-  filters?: any
 }
+
+export interface IUpdateCustomer {
+  id: string
+  name?: string
+  birth_date?: string
+  cpf?: string
+  email?: string
+  phone?: string
+}
+
+export interface IRequest {
+  id: string
+}
+
+export interface ICreateCustomer extends Omit<IUpdateCustomer, 'id'> {}

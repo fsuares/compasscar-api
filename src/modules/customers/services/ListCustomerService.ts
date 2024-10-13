@@ -21,7 +21,7 @@ export class ListCustomerService {
     })
 
     if (customers.data.length === 0) {
-      throw new AppError('Customers not found', 404)
+      throw new AppError('customers not found', 404)
     }
 
     return customers
