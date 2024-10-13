@@ -21,13 +21,13 @@ export class CreateCarsService {
     year,
     price,
     items
-  }: ICreateCar): Promise<ICreateCar | AppError> {
+  }: ICreateCar): Promise<String> {
     const carAlreadyExists = await CarsRepository.findByPlate(license_plate)
     if (
       carAlreadyExists &&
       carAlreadyExists.some((car) => car.status === CarStatus.ACTIVE)
     ) {
-      throw new AppError('Car already exists', 409)
+      throw new AppError('car already exists', 409)
     }
 
     const car = CarsRepository.create({
@@ -41,6 +41,6 @@ export class CreateCarsService {
     })
 
     await CarsRepository.save(car)
-    return car
+    return car.id
   }
 }

@@ -24,16 +24,7 @@ export class Car {
   model: string
 
   @Column()
-  km: number
-
-  @Column()
   year: number
-
-  @Column({ type: 'decimal', precision: 2, scale: 2 })
-  price: number
-
-  @Column('text', { array: true })
-  items: string[]
 
   @Column({
     type: 'enum',
@@ -41,6 +32,15 @@ export class Car {
     default: CarStatus.ACTIVE
   })
   status: CarStatus
+
+  @Column()
+  km: number
+
+  @Column({ type: 'decimal', precision: 2, scale: 2 })
+  price: number
+
+  @Column('text', { array: true })
+  items: string[]
 
   @CreateDateColumn()
   created_at: Date
