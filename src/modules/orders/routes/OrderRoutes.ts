@@ -35,6 +35,21 @@ ordersRouter.get(
   '/:id',
   celebrate({
     [Segments.PARAMS]: {
+      id: Joi.string().uuid().required().messages({
+        'string.base': 'id must be a valid string',
+        'string.empty': 'id cannot be empty',
+        'string.guid': 'id must be a valid uuid',
+        'any.required': 'id is required'
+      })
+    }
+  }),
+  ordersController.findById
+)
+
+ordersRouter.get(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
       id: Joi.string().uuid().required()
     }
   }),
@@ -62,19 +77,14 @@ ordersRouter.patch(
   ordersController.update
 )
 
-ordersRouter.get(
+ordersRouter.delete(
   '/:id',
   celebrate({
     [Segments.PARAMS]: {
-      id: Joi.string().uuid().required().messages({
-        'string.base': 'id must be a valid string',
-        'string.empty': 'id cannot be empty',
-        'string.guid': 'id must be a valid uuid',
-        'any.required': 'id is required'
-      })
+      id: Joi.string().uuid().required()
     }
   }),
-  ordersController.findById
+  ordersController.delete
 )
 
 ordersRouter.use(
@@ -92,16 +102,6 @@ ordersRouter.use(
     }
     next(error)
   }
-)
-
-ordersRouter.delete(
-  '/:id',
-  celebrate({
-    [Segments.PARAMS]: {
-      id: Joi.string().uuid().required()
-    }
-  }),
-  ordersController.delete
 )
 
 export default ordersRouter
