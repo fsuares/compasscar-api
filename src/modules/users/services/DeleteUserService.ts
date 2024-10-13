@@ -10,7 +10,6 @@ export class DeleteUserService {
     if (user.excluded_at) {
       throw new AppError('user not found or excluded', 404)
     }
-    const date = new Date()
-    await UsersRepository.userSoftDelete(id, date)
+    await UsersRepository.userSoftDelete(id, new Date())
   }
 }
