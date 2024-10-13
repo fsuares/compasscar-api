@@ -1,6 +1,7 @@
 import AppError from '@errors/AppError'
 import { CarsRepository } from '@cars/repositories/CarsRepository'
 import { IRequestUpdate } from '@cars/interfaces/CarInterfaces'
+import { CarStatus } from '@utils/car.status.enum'
 
 export class UpdateCarService {
   public async execute({
@@ -13,9 +14,9 @@ export class UpdateCarService {
     price,
     items,
     status
-  }: IRequestUpdate): Promise<any> {
+  }: IRequestUpdate & { status: CarStatus }): Promise<any> {
     const car = await CarsRepository.findByID(id)
-    if (!car || car.status === 'excluido') {
+    if (!car || car.status === CarStatus.EXCLUDED) {
       throw new AppError('Car not found', 404)
     }
 
