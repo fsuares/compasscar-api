@@ -74,5 +74,14 @@ export const OrdersRepository = dataSource.getRepository(Order).extend({
       .getManyAndCount()
 
     return { result, total }
+  },
+  
+  async deleteOrder(order: Order) {
+    return this.createQueryBuilder('orders')
+      .update('orders')
+      .set({ cancel_date: new Date(), status: 'canceled' })
+      .where('orders.id = :id', { id: order.id })
+      .execute()
+
   }
 })

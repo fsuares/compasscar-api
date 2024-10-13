@@ -31,6 +31,21 @@ ordersRouter.post(
   ordersController.create
 )
 
+ordersRouter.get(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required().messages({
+        'string.base': 'id must be a valid string',
+        'string.empty': 'id cannot be empty',
+        'string.guid': 'id must be a valid uuid',
+        'any.required': 'id is required'
+      })
+    }
+  }),
+  ordersController.findById
+)
+
 ordersRouter.patch(
   '/:id',
   celebrate({
@@ -65,6 +80,16 @@ ordersRouter.get(
     }
   }),
   ordersController.findById
+
+ordersRouter.delete(
+  '/:id',
+  celebrate({
+    [Segments.PARAMS]: {
+      id: Joi.string().uuid().required()
+    }
+  }),
+  ordersController.delete
+
 )
 
 ordersRouter.get('/', ordersController.findAll)

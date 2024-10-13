@@ -6,7 +6,7 @@ export class DeleteCustomerService {
     const customer = await CustomersRepository.findByID(id)
 
     if (!customer) {
-      throw new AppError('Customer not found', 404)
+      throw new AppError('customer not found', 404)
     }
 
     const date = new Date()
