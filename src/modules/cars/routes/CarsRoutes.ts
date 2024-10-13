@@ -1,5 +1,3 @@
-import { Router } from 'express'
-import { celebrate, isCelebrateError, Joi, Segments } from 'celebrate'
 import { NextFunction, Router, Response, Request } from 'express'
 import { celebrate, isCelebrateError, Joi, Segments } from 'celebrate'
 import { itemsUnique } from '@cars/middlewares/itemsUnique'
@@ -99,6 +97,24 @@ carsRouter.delete(
   }),
   carsController.delete
 )
+
+carsRouter.use(
+  (error: Error, _req: Request, res: Response, next: NextFunction) => {
+    if (isCelebrateError(error)) {
+      const errorDetails =
+        error.details.get('params') ||
+        error.details.get('body') ||
+        error.details.get('query')
+      if (errorDetails) {
+        const errorMessage = errorDetails.details[0].message
+        const statusCode = 400
+        throw new AppError(errorMessage, statusCode)
+      }
+    }
+    next(error)
+  }
+)
+
 carsRouter.use((error: Error): any => {
   if (isCelebrateError(error)) {
     console.log('entrou', error)
