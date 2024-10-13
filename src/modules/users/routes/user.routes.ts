@@ -8,6 +8,7 @@ const userControllers = new UsersController()
 
 userRouter.post('/', userControllers.create)
 userRouter.get('/:id', userControllers.findById)
+userRouter.get('/', userControllers.listUsers)
 userRouter.patch('/:id', userControllers.update)
 
 export default userRouter

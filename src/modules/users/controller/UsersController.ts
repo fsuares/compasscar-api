@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 import { FindyByIdUserService } from '@users/services/FindyByIdUserService'
 import { CreateUserService } from '@users/services/CreateUserService'
 import { UpdateUserService } from '@users/services/UpdateUserService'
+import { ListUserService } from '@users/services/ListUserService'
 
 export class UsersController {
   public async create(req: Request, res: Response): Promise<string | any> {
@@ -17,6 +18,15 @@ export class UsersController {
     const findyByIdUserService = new FindyByIdUserService()
     const user = await findyByIdUserService.execute(id)
     return res.status(200).json(user)
+  }
+
+  public async listUsers(req: Request, res: Response): Promise<any> {
+    const listUserService = new ListUserService()
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || 10
+    const filters = req.query
+    const users = await listUserService.execute({ page, limit, filters })
+    return res.status(200).json(users)
   }
 
   public async update(req: Request, res: Response): Promise<string | any> {
