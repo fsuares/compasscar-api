@@ -26,6 +26,8 @@ export class UpdateUserService {
     user.name = name
     user.email = email
     await UsersRepository.save(user)
+
+    Reflect.deleteProperty(user, 'password')
     return user
   }
 }
