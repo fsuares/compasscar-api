@@ -1,6 +1,9 @@
 import { Request, Response } from 'express'
 import { CreateOrderService } from '@orders/services/CreateOrderService'
 import { UpdateOrderService } from '@orders/services/UpdateOrderService'
+import { ShowOrderService } from '@orders/services/ShowOrderService'
+import { DeleteOrderService } from '@orders/services/DeleteOrderService'
+
 import { FindByIdOrderService } from '@orders/services/FindbyOrderService'
 import { IOrderResponse } from '@orders/interfaces/OrdersInterface'
 
@@ -64,6 +67,6 @@ export default class OrdersController {
   public async delete(req: Request, res: Response): Promise<any> {
     const { id } = req.params
     await new DeleteOrderService().execute(id)
-    return res.status(204).json()
+    return res.status(204).send()
   }
 }

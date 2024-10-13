@@ -115,16 +115,6 @@ carsRouter.use(
   }
 )
 
-carsRouter.use((error: Error): any => {
-  if (isCelebrateError(error)) {
-    console.log('entrou', error)
-    const errorMessage =
-      error.details.get('params')?.details[0].message || 'Invalid parameters'
-    const statusCode = 400
-    throw new AppError(errorMessage, statusCode)
-  }
-})
-
 carsRouter.use(
   (error: Error, _req: Request, res: Response, next: NextFunction) => {
     if (isCelebrateError(error)) {

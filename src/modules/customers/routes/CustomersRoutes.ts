@@ -1,7 +1,5 @@
 import { NextFunction, Router, Response, Request } from 'express'
 import { celebrate, isCelebrateError, Joi, Segments } from 'celebrate'
-import { NextFunction, Router, Response, Request } from 'express'
-import { celebrate, isCelebrateError, Joi, Segments } from 'celebrate'
 import isValidCpf from '@customers/middlewares/isValidCpf'
 import CustomersController from '@customers/controllers/CustomersController'
 import AppError from '@errors/AppError'
@@ -119,23 +117,6 @@ customersRouter.patch(
   }),
   isValidCpf,
   customersController.update
-)
-
-customersRouter.use(
-  (error: Error, _req: Request, res: Response, next: NextFunction) => {
-    if (isCelebrateError(error)) {
-      const errorDetails =
-        error.details.get('params') ||
-        error.details.get('body') ||
-        error.details.get('query')
-      if (errorDetails) {
-        const errorMessage = errorDetails.details[0].message
-        const statusCode = 400
-        throw new AppError(errorMessage, statusCode)
-      }
-    }
-    next(error)
-  }
 )
 
 customersRouter.use(
