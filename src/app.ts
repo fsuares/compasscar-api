@@ -4,12 +4,12 @@ import cors from 'cors'
 import express, { Router, Request, Response, NextFunction } from 'express'
 import { errors } from 'celebrate'
 import AppError from '@errors/AppError'
-import carsRouter from '@cars/routes/cars.routes'
-import userRouter from '@users/routes/user.routes'
-import ordersRouter from '@orders/routes/order.routes'
+import userRouter from '@users/routes/UserRoutes'
+import ordersRouter from '@orders/routes/OrderRoutes'
 import customersRouter from '@customers/routes/CustomersRoutes'
 import authRouter from '@auth/routes/authRoutes'
 import authMiddleware from '@auth/middlewares/authMiddleware'
+import carsRouter from '@cars/routes/CarsRoutes'
 
 export const app = express()
 const routes = Router()
