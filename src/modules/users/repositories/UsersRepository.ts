@@ -61,7 +61,7 @@ export const UsersRepository = dataSource.getRepository(User).extend({
         query.andWhere(condition, { [key]: paramValue })
       }
     })
-    //olhar a ordenação
+
     if (filters.orderBy && filters.orderBy.length > 0) {
       const filtersOrder = new Set([filters.orderBy])
       const orderFields = new Set(['name', 'created_at', 'excluded_at'])
@@ -69,7 +69,7 @@ export const UsersRepository = dataSource.getRepository(User).extend({
         if (orderFields.has(orderField)) {
           query.addOrderBy(
             `users.${orderField}`,
-            filters.orderDirection?.[listUsers] || filters.order
+            filters.order?.toUpperCase() || 'ASC'
           )
         }
       })
