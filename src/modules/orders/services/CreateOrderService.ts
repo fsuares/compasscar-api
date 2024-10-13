@@ -17,25 +17,25 @@ export class CreateOrderService {
     const carOrder = await OrdersRepository.findByCar(car_id)
     carOrder.forEach((order) => {
       if (order.status === 'open' || order.status === 'approved') {
-        throw new AppError('Car currently rented', 409)
+        throw new AppError('car currently rented', 409)
       }
     })
 
     const customerOrder = await OrdersRepository.findByCustomer(customer_id)
     customerOrder.forEach((order) => {
       if (order.status === 'open' || order.status === 'approved') {
-        throw new AppError('Customer currently renting a car', 409)
+        throw new AppError('customer currently renting a car', 409)
       }
     })
 
     const car = await CarsRepository.findByID(car_id)
     if (!car) {
-      throw new AppError('Car not found', 404)
+      throw new AppError('car not found', 404)
     }
 
     const customer = await CustomersRepository.findByID(customer_id)
     if (!customer) {
-      throw new AppError('Customer not found', 404)
+      throw new AppError('customer not found', 404)
     }
 
     const {
