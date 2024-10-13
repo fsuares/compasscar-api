@@ -28,7 +28,7 @@ export class UsersController {
       email,
       password
     })
-    return res.status(200).json(updateUser)
+    return res.status(204).send()
   }
 
   public async delete(req: Request, res: Response): Promise<string | any> {
