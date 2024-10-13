@@ -3,6 +3,7 @@ import { CreateOrderService } from '@orders/services/CreateOrderService'
 import { UpdateOrderService } from '@orders/services/UpdateOrderService'
 import { ShowOrderService } from '@orders/services/ShowOrderService'
 import { DeleteOrderService } from '@orders/services/DeleteOrderService'
+
 import { FindByIdOrderService } from '@orders/services/FindbyOrderService'
 import { IOrderResponse } from '@orders/interfaces/OrdersInterface'
 
@@ -20,6 +21,13 @@ export default class OrdersController {
       end_date
     })
     return res.status(201).json(order)
+  }
+
+  public async show(req: Request, res: Response): Promise<any> {
+    const { id } = req.params
+    const showOrder = new ShowOrderService()
+    const order = await showOrder.execute(id)
+    return res.status(200).json(order)
   }
 
   public async show(req: Request, res: Response): Promise<any> {

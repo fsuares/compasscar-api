@@ -13,3 +13,24 @@ export interface ICreateUser
 
 export interface IUpdateUser
   extends Omit<User, 'excluded_at' | 'created_at' | 'updated_at'> {}
+
+export interface IUserPaginate {
+  total: number
+  page: number
+  per_page: number
+  data: User[]
+}
+
+export interface IListRequest {
+  page: number
+  limit: number
+  filters?: any
+}
+
+export interface ISearchParams {
+  page: number
+  skip: number
+  take: number
+  filters?: any
+}
+
