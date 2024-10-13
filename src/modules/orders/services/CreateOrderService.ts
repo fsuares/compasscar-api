@@ -28,6 +28,14 @@ export class CreateOrderService {
       }
     })
 
+    if (start_date < new Date()) {
+      throw new AppError('start date must be greater than current date', 400)
+    }
+
+    if (end_date < start_date) {
+      throw new AppError('end date must be greater than start date', 400)
+    }
+
     const car = await CarsRepository.findByID(car_id)
     if (!car) {
       throw new AppError('car not found', 404)
