@@ -21,7 +21,7 @@ routes.use('/cars', authMiddleware, carsRouter)
 routes.use('/users', authMiddleware, userRouter)
 routes.use('/orders', authMiddleware, ordersRouter)
 routes.use('/customers', authMiddleware, customersRouter)
-routes.use('/auth', authRouter) // rota publica sem proteção
+routes.use('/auth', authRouter)
 
 app.use(routes)
 
@@ -43,7 +43,7 @@ app.use(
 
     return res.status(500).json({
       status: 'error',
-      message: 'Internal server error'
+      message: 'internal server error'
     })
   }
 )
