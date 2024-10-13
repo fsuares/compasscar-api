@@ -6,7 +6,7 @@ export class ShowCarService {
   public async execute({ id }: IRequestShow): Promise<any> {
     const car = await CarsRepository.findByID(id)
     if (!car) {
-      throw new AppError('Car not found', 404)
+      throw new AppError('car not found', 404)
     }
     return car
   }
