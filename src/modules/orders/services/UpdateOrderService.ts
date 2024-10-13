@@ -19,7 +19,7 @@ export class UpdateOrderService {
       relations: ['car', 'customer']
     })
     if (!order) {
-      throw new AppError('Order not found', 404)
+      throw new AppError('order not found', 404)
     }
 
     if (status) {
@@ -29,7 +29,7 @@ export class UpdateOrderService {
             order.cancel_date = new Date()
             order.status = status
           } else {
-            throw new AppError('Order not open', 400)
+            throw new AppError('order not open', 400)
           }
           break
 
@@ -37,7 +37,7 @@ export class UpdateOrderService {
           if (order.status === OrderStatus.OPEN) {
             order.status = status
           } else {
-            throw new AppError('Order not open', 400)
+            throw new AppError('order not open', 400)
           }
           break
 
@@ -51,7 +51,7 @@ export class UpdateOrderService {
             order.closed_date = new Date()
             order.status = status
           } else {
-            throw new AppError('Order not approved', 400)
+            throw new AppError('order not approved', 400)
           }
           break
       }

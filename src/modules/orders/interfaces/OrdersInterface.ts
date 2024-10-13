@@ -1,4 +1,3 @@
-import { Customer } from '@customers/entities/Customer'
 import { OrderStatus } from '@utils/order.status.enum'
 
 export interface ICreateOrder {
@@ -15,4 +14,33 @@ export interface IUpdateRequest {
   end_date: Date
   cep: string
   status: OrderStatus
+}
+
+export interface IOrderResponse {
+  id: string
+  status: string
+  orderDate: Date
+  startDate: Date
+  endDate: Date
+  orderFee: number
+  totalValue: number
+  cep: string
+  city: string
+  uf: string
+  customer: {
+    id: string
+    name: string
+    email: string
+    cpf: string
+  }
+  car: {
+    id: string
+    brand: string
+    model: string
+    year: number
+    km: number
+    items: string[]
+    licensePlate: string
+    dailyValue: number
+  }
 }
