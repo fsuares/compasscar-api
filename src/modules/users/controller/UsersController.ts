@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { FindyByIdUserService } from '@users/services/FindyByIdUserService'
+import { FindyByIdUserService } from '@users/services/FindByIdUserService'
 import { CreateUserService } from '@users/services/CreateUserService'
 import { UpdateUserService } from '@users/services/UpdateUserService'
 import { DeleteUserService } from '@users/services/DeleteUserService'
