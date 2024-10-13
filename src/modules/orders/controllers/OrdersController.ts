@@ -3,8 +3,6 @@ import { CreateOrderService } from '@orders/services/CreateOrderService'
 import { UpdateOrderService } from '@orders/services/UpdateOrderService'
 import { FindByIdOrderService } from '@orders/services/FindbyOrderService'
 import { IOrderResponse } from '@orders/interfaces/OrdersInterface'
-import { ShowOrderService } from '@orders/services/ShowOrderService'
-import { DeleteOrderService } from '@orders/services/DeleteOrderService'
 
 export default class OrdersController {
   public async create(req: Request, res: Response): Promise<string | any> {
