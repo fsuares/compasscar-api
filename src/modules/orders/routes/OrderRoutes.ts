@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { NextFunction, Router, Response, Request } from 'express'
 import { celebrate, isCelebrateError, Joi, Segments } from 'celebrate'
 import OrdersController from '@orders/controllers/OrdersController'
 import { OrderStatus } from '@utils/order.status.enum'
@@ -35,10 +35,13 @@ ordersRouter.patch(
   '/:id',
   celebrate({
     [Segments.PARAMS]: {
-      id: Joi.string().uuid().required()
-    }
-  }),
-  celebrate({
+      id: Joi.string().uuid().required().messages({
+        'string.base': 'id must be a valid string',
+        'string.empty': 'id cannot be empty',
+        'string.guid': 'id must be a valid uuid',
+        'any.required': 'id is required'
+      })
+    },
     [Segments.BODY]: {
       cep: Joi.string(),
       end_date: Joi.date(),
@@ -48,15 +51,22 @@ ordersRouter.patch(
   }),
   ordersController.update
 )
-ordersRouter.use((error: Error): any => {
-  if (isCelebrateError(error)) {
-    console.log('entrou', error)
-    const errorMessage =
-      error.details.get('params')?.details[0].message || 'Invalid parameters'
-    const statusCode = 400
-    throw new AppError(errorMessage, statusCode)
+ordersRouter.use(
+  (error: Error, _req: Request, res: Response, next: NextFunction) => {
+    if (isCelebrateError(error)) {
+      const errorDetails =
+        error.details.get('params') ||
+        error.details.get('body') ||
+        error.details.get('query')
+      if (errorDetails) {
+        const errorMessage = errorDetails.details[0].message
+        const statusCode = 400
+        throw new AppError(errorMessage, statusCode)
+      }
+    }
+    next(error)
   }
-})
+)
 
 ordersRouter.delete(
   '/:id',

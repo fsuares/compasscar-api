@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { NextFunction, Router, Response, Request } from 'express'
 import AuthController from '@auth/controllers/authController'
 import { celebrate, isCelebrateError, Joi, Segments } from 'celebrate'
 import AuthService from '@auth/services/authService'
@@ -28,5 +28,22 @@ authRouter.use((error: Error): any => {
     throw new AppError(errorMessage, statusCode)
   }
 })
+
+authRouter.use(
+  (error: Error, _req: Request, res: Response, next: NextFunction) => {
+    if (isCelebrateError(error)) {
+      const errorDetails =
+        error.details.get('params') ||
+        error.details.get('body') ||
+        error.details.get('query')
+      if (errorDetails) {
+        const errorMessage = errorDetails.details[0].message
+        const statusCode = 400
+        throw new AppError(errorMessage, statusCode)
+      }
+    }
+    next(error)
+  }
+)
 
 export default authRouter
