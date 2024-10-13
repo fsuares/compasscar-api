@@ -61,6 +61,6 @@ export default class OrdersController {
   public async delete(req: Request, res: Response): Promise<any> {
     const { id } = req.params
     await new DeleteOrderService().execute(id)
-    return res.status(204).json()
+    return res.status(204).send()
   }
 
