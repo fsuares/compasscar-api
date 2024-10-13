@@ -7,23 +7,115 @@
   },
   "servers": [
     {
-      "url": "http://localhost:3003/api/v1/",
-      "description": "API"
+      "url": "http://localhost:3000/",
+      "description": "API de test"
     }
   ],
   "paths": {
-    "/": {
-      "post": {},
-      "get": {}
+    "  /": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Register user in the database, where it is necessary to inform the Name, Email  and Paswword.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user"
+              },
+              "example": {
+                "name": "Maria Silva",
+                "email": "mariasilva@seuprovedor.com",
+                "password": "125fadR125We#@"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string uuid",
+                      "example": "5bdf4c60-fde2-477f-a054-f80bdcd51e84"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "email address already used"
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Register user in the database, where it is necessary to inform the Name, Email  and Paswword.",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/user"
+              },
+              "example": {
+                "name": "Maria Silva",
+                "email": "mariasilva@seuprovedor.com",
+                "password": "125fadR125We#@"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string uuid",
+                      "example": "adsgaghafbfsd"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "409": {
+            "description": "email address already used"
+          },
+          "500": {
+            "description": "internal server error"
+          }
+        }
+      }
     },
-    "/{id}": {
-      "get": {},
-      "patch": {},
-      "delete": {}
-    }
-  },
-  "components": {
-    "schemas": {
+    "components": {
+      "schemas": {
+        "user": {
+          "type": "object""properties": "name": "type": "string""required": true
+        "email": "type": "string""required": true
+        "password": "type": "sring""required": true
+        }
+      },
       "car": {
         "type": "object",
         "properties": {

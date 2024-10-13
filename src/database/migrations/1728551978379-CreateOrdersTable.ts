@@ -47,11 +47,23 @@ export class CreateOrdersTable1728551978379 implements MigrationInterface {
           },
           {
             name: 'order_fee',
-            type: 'float'
+            type: 'decimal',
+            precision: 10,
+            scale: 2
           },
           {
             name: 'total_value',
-            type: 'float'
+            type: 'decimal',
+            precision: 10,
+            scale: 2
+          },
+          {
+            name: 'penalty_value',
+            type: 'float',
+            precision: 10,
+            scale: 2,
+            isNullable: true,
+            default: null
           },
           {
             name: 'created_at',
@@ -75,12 +87,6 @@ export class CreateOrdersTable1728551978379 implements MigrationInterface {
           {
             name: 'closed_date',
             type: 'timestamp with time zone',
-            isNullable: true,
-            default: null
-          },
-          {
-            name: 'penalty_value',
-            type: 'float',
             isNullable: true,
             default: null
           },

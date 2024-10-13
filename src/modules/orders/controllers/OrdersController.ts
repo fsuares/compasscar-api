@@ -5,7 +5,11 @@ import { ShowOrderService } from '@orders/services/ShowOrderService'
 import { DeleteOrderService } from '@orders/services/DeleteOrderService'
 
 import { FindByIdOrderService } from '@orders/services/FindbyOrderService'
-import { IOrderResponse } from '@orders/interfaces/OrdersInterface'
+import {
+  IListOrderResponse,
+  IOrderResponse
+} from '@orders/interfaces/OrdersInterface'
+import { ListOrdersService } from '@orders/services/FindOrdersService'
 
 export default class OrdersController {
   public async create(req: Request, res: Response): Promise<string | any> {
@@ -64,9 +68,19 @@ export default class OrdersController {
     return res.status(201).json(order)
   }
 
+  public async findAll(req: Request, res: Response): Promise<any> {
+    const page = Number(req.query.page) || 1
+    const limit = Number(req.query.limit) || 10
+    const filters = req.query
+    const findOrdersService = new ListOrdersService()
+    const order = await findOrdersService.execute({ page, limit, filters })
+    return res.status(201).json(order)
+  }
+  
   public async delete(req: Request, res: Response): Promise<any> {
     const { id } = req.params
     await new DeleteOrderService().execute(id)
     return res.status(204).send()
+
   }
 }
