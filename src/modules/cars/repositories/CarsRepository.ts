@@ -36,7 +36,6 @@ export const CarsRepository = dataSource.getRepository(Car).extend({
   },
 
   async findAll({
-    page,
     skip,
     limit,
     filters = {}
@@ -71,12 +70,11 @@ export const CarsRepository = dataSource.getRepository(Car).extend({
       query.andWhere('cars.items && ARRAY[:...items]', { items: filters.items })
     }
 
-    if (filters.orderBy && filters.orderBy.length > 0) {
-      const orderFields = new Set(['price', 'year', 'km'])
-      filters.orderBy.forEach((orderField: string, index: number) => {
-        if (orderFields.has(orderField)) {
-          query.addOrderBy(`cars.${orderField}`, filters.order || 'ASC')
-        }
+    if (filters.orderBy) {
+      const orderBy = [filters.orderBy]
+      orderBy.forEach((orderOptions: string) => {
+        const [field, order] = orderOptions.split(':')
+        query.addOrderBy(`cars.${field}`, order.toUpperCase() as 'ASC' | 'DESC')
       })
     }
 
