@@ -5,8 +5,6 @@ import { ShowOrderService } from '@orders/services/ShowOrderService'
 import { DeleteOrderService } from '@orders/services/DeleteOrderService'
 import { FindByIdOrderService } from '@orders/services/FindbyOrderService'
 import { IOrderResponse } from '@orders/interfaces/OrdersInterface'
-import { ShowOrderService } from '@orders/services/ShowOrderService'
-import { DeleteOrderService } from '@orders/services/DeleteOrderService'
 
 export default class OrdersController {
   public async create(req: Request, res: Response): Promise<string | any> {
@@ -63,4 +61,4 @@ export default class OrdersController {
     await new DeleteOrderService().execute(id)
     return res.status(204).send()
   }
-
+}
