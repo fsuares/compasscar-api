@@ -78,7 +78,7 @@ export const UsersRepository = dataSource.getRepository(User).extend({
     return {
       total: count,
       page: Math.ceil(count / take),
-      per_page: take,
+      limit: take,
       data: users
     }
   },

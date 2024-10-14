@@ -4,7 +4,7 @@ import { CreateUserService } from '@users/services/CreateUserService'
 import { UpdateUserService } from '@users/services/UpdateUserService'
 import { DeleteUserService } from '@users/services/DeleteUserService'
 import { ListUserService } from '@users/services/ListUserService'
-
+import { IUsersResponse } from '@users/interface/UserInterfaces'
 
 export class UsersController {
   public async create(req: Request, res: Response): Promise<string | any> {
@@ -21,15 +21,18 @@ export class UsersController {
     return res.status(200).json(user)
   }
 
-  public async listUsers(req: Request, res: Response): Promise<any> {
-    const listUserService = new ListUserService()
+  public async listUsers(
+    req: Request,
+    res: Response
+  ): Promise<IUsersResponse | any> {
     const page = Number(req.query.page) || 1
     const limit = Number(req.query.limit) || 10
     const filters = req.query
+    const listUserService = new ListUserService()
     const users = await listUserService.execute({ page, limit, filters })
     return res.status(200).json(users)
   }
-  
+
   public async update(req: Request, res: Response): Promise<string | any> {
     const id = req.params.id
     const { name, email, password } = req.body

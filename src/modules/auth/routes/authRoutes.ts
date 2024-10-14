@@ -9,7 +9,7 @@ const authService = new AuthService()
 const authController = new AuthController(authService)
 
 authRouter.post(
-  '/login',
+  '/',
   celebrate({
     [Segments.BODY]: Joi.object().keys({
       email: Joi.string().email().required(),
@@ -18,16 +18,6 @@ authRouter.post(
   }),
   (req, res) => authController.login(req, res)
 )
-
-authRouter.use((error: Error): any => {
-  if (isCelebrateError(error)) {
-    console.log('entrou', error)
-    const errorMessage =
-      error.details.get('params')?.details[0].message || 'Invalid parameters'
-    const statusCode = 400
-    throw new AppError(errorMessage, statusCode)
-  }
-})
 
 authRouter.use(
   (error: Error, _req: Request, res: Response, next: NextFunction) => {

@@ -79,6 +79,8 @@ ordersRouter.delete(
   ordersController.delete
 )
 
+ordersRouter.get('/', ordersController.findAll)
+
 ordersRouter.use(
   (error: Error, _req: Request, res: Response, next: NextFunction) => {
     if (isCelebrateError(error)) {

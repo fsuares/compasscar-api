@@ -23,6 +23,8 @@ userRouter.get(
   userControllers.findById
 )
 
+userRouter.get('/', userControllers.listUsers)
+
 userRouter.patch(
   '/:id',
   celebrate({
