@@ -74,7 +74,10 @@ export const CarsRepository = dataSource.getRepository(Car).extend({
       const orderBy = [filters.orderBy]
       orderBy.forEach((orderOptions: string) => {
         const [field, order] = orderOptions.split(':')
-        query.addOrderBy(`cars.${field}`, order.toUpperCase() as 'ASC' | 'DESC')
+        query.addOrderBy(
+          `cars.${field}`,
+          (order?.toUpperCase() as 'ASC' | 'DESC') || 'ASC'
+        )
       })
     }
 
