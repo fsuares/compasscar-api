@@ -12,22 +12,27 @@
     }
   ],
   "paths": {
-    "  /": {
+    "/users": {
       "post": {
         "tags": [
           "Users"
         ],
-        "description": "Register user in the database, where it is necessary to inform the Name, Email  and Paswword.",
+        "description": "Register user in the database, where it is necessary to inform the Name, Email and Password.",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/user"
+                "$ref": "#/components/schemas/User"
               },
-              "example": {
-                "name": "Maria Silva",
-                "email": "mariasilva@seuprovedor.com",
-                "password": "125fadR125We#@"
+              "examples": {
+                "example": {
+                  "summary": "User registration example",
+                  "value": {
+                    "name": "Maria Silva",
+                    "email": "mariasilva@seuprovedor.com",
+                    "password": "125fadR125We#@"
+                  }
+                }
               }
             }
           }
@@ -41,7 +46,7 @@
                   "type": "object",
                   "properties": {
                     "id": {
-                      "type": "string uuid",
+                      "type": "string",
                       "example": "5bdf4c60-fde2-477f-a054-f80bdcd51e84"
                     }
                   }
@@ -53,10 +58,10 @@
             "description": "Bad Request"
           },
           "409": {
-            "description": "email address already used"
+            "description": "Email address already used"
           },
           "500": {
-            "description": "internal server error"
+            "description": "Internal server error"
           }
         }
       },
@@ -64,33 +69,16 @@
         "tags": [
           "Users"
         ],
-        "description": "Register user in the database, where it is necessary to inform the Name, Email  and Paswword.",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/user"
-              },
-              "example": {
-                "name": "Maria Silva",
-                "email": "mariasilva@seuprovedor.com",
-                "password": "125fadR125We#@"
-              }
-            }
-          }
-        },
+        "description": "Returns a list of all users of the application.",
         "responses": {
-          "201": {
-            "description": "Created",
+          "200": {
+            "description": "List of users",
             "content": {
               "application/json": {
                 "schema": {
-                  "type": "object",
-                  "properties": {
-                    "id": {
-                      "type": "string uuid",
-                      "example": "adsgaghafbfsd"
-                    }
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
                   }
                 }
               }
@@ -99,46 +87,174 @@
           "400": {
             "description": "Bad Request"
           },
-          "409": {
-            "description": "email address already used"
-          },
           "500": {
-            "description": "internal server error"
+            "description": "Internal server error"
           }
         }
       }
     },
-    "components": {
-      "schemas": {
-        "user": {
-          "type": "object""properties": "name": "type": "string""required": true
-        "email": "type": "string""required": true
-        "password": "type": "sring""required": true
+    "/users/{id}": {
+      "get": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Returns a user by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "User ID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
         }
       },
-      "car": {
+      "patch": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Updates a user by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "User ID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "User updated",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Deletes a user by ID.",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "description": "User ID",
+            "schema": {
+              "type": "string",
+              "format": "uuid"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "User deleted"
+          },
+          "404": {
+            "description": "User not found"
+          },
+          "500": {
+            "description": "Internal server error"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "email",
+          "password"
+        ]
+      },
+      "Car": {
         "type": "object",
         "properties": {
           "brand": {
-            "type": "string",
-            "required": true
+            "type": "string"
           },
           "model": {
-            "type": "string",
-            "required": true
+            "type": "string"
           },
           "year": {
-            "type": "number",
-            "required": true
+            "type": "number"
           },
           "items": {
             "type": "array",
-            "required": true,
             "items": {
               "type": "string"
             }
           }
-        }
+        },
+        "required": [
+          "brand",
+          "model",
+          "year",
+          "items"
+        ]
       }
     }
   }
