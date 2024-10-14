@@ -8,7 +8,7 @@ servers:
   - url: http://localhost:3003/compass/api/v1
     description: API test
 paths:
-  /auth/login:
+  /login:
     post:
       tags:
         - Auth
