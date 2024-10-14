@@ -8,12 +8,11 @@ export class ListCarService {
     limit,
     filters
   }: IRequestIndex): Promise<ICarPaginate> {
-    const take = limit
-    const skip = (Number(page) - 1) * take
+    const skip = (Number(page) - 1) * limit
     const cars = await CarsRepository.findAll({
       page,
       skip,
-      take,
+      limit,
       filters
     })
 

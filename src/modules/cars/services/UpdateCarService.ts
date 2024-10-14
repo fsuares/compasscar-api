@@ -17,7 +17,7 @@ export class UpdateCarService {
   }: IRequestUpdate & { status: CarStatus }): Promise<any> {
     const car = await CarsRepository.findByID(id)
     if (!car || car.status === CarStatus.EXCLUDED) {
-      throw new AppError('Car not found', 404)
+      throw new AppError('car not found', 404)
     }
 
     car.license_plate = license_plate

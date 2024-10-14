@@ -3,6 +3,7 @@ import { celebrate, isCelebrateError, Joi, Segments } from 'celebrate'
 import { itemsUnique } from '@cars/middlewares/itemsUnique'
 import CarsController from '@cars/controllers/CarsController'
 import { CarStatus } from '@utils/car.status.enum'
+import { yearMax, yearMin } from '@cars/utils/year'
 import AppError from '@errors/AppError'
 
 const carsRouter = Router()
@@ -15,7 +16,7 @@ carsRouter.post(
       license_plate: Joi.string().required(),
       brand: Joi.string().required(),
       model: Joi.string().required(),
-      year: Joi.number().required(),
+      year: Joi.number().min(yearMin).max(yearMax).required(),
       km: Joi.number().required(),
       price: Joi.number().required(),
       items: Joi.array()
