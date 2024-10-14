@@ -69,6 +69,12 @@ export class UpdateOrderService {
       order.city = localidade
       order.uf = uf
       order.order_fee = feeValues[uf]
+
+      const total_value =
+        calculateDay(order.start_date, order.end_date) * order.car.price +
+        order.order_fee
+
+      order.total_value = total_value
     }
 
     if (start_date || end_date) {
@@ -90,12 +96,6 @@ export class UpdateOrderService {
         throw new AppError('end_date must be greater than current date', 400)
       }
     }
-
-    const total_value =
-      calculateDay(order.start_date, order.end_date) * order.car.price +
-      order.order_fee
-
-    order.total_value = total_value
 
     await OrdersRepository.save(order)
     return order
