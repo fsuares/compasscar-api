@@ -16,7 +16,7 @@ export interface IUpdateUser
 
 export interface IUserPaginate {
   total: number
-  page: number
+  total_pages: number
   limit: number
   data: IUsersResponse[]
 }

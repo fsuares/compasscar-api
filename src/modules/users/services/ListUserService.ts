@@ -10,10 +10,10 @@ export class ListUserService {
   }: IListRequest): Promise<IUserPaginate> {
     const take = limit
     const skip = (Number(page) - 1) * take
-    let { data, total } = await UsersRepository.findAll({
+    let { data, total, total_pages } = await UsersRepository.findAll({
       page,
       skip,
-      take,
+      limit,
       filters
     })
 
@@ -31,7 +31,7 @@ export class ListUserService {
 
     return {
       total,
-      page: page,
+      total_pages: total_pages,
       limit: take,
       data: users
     }

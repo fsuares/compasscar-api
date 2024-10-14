@@ -39,10 +39,10 @@ export const UsersRepository = dataSource.getRepository(User).extend({
   async findAll({
     page,
     skip,
-    take,
+    limit,
     filters = {}
   }: ISearchParams): Promise<IUserPaginate> {
-    const query = this.createQueryBuilder('users').skip(skip).take(take)
+    const query = this.createQueryBuilder('users').skip(skip).take(limit)
 
     const filterConditions: { [key in keyof typeof filters]?: string } = {
       name: 'users.name ILIKE :name',
@@ -77,8 +77,8 @@ export const UsersRepository = dataSource.getRepository(User).extend({
     const [users, count] = await query.getManyAndCount()
     return {
       total: count,
-      page: Math.ceil(count / take),
-      limit: take,
+      total_pages: Math.ceil(count / limit),
+      limit: limit,
       data: users
     }
   },
