@@ -1,5 +1,6 @@
 import AppError from '@errors/AppError'
 import { CarsRepository } from '@cars/repositories/CarsRepository'
+import { CarStatus } from '@utils/car.status.enum'
 
 interface ICreateCar {
   license_plate: string
@@ -20,15 +21,11 @@ export class CreateCarsService {
     year,
     price,
     items
-  }: ICreateCar): Promise<ICreateCar | AppError> {
+  }: ICreateCar): Promise<string> {
     const carAlreadyExists = await CarsRepository.findByPlate(license_plate)
-    if (
-      carAlreadyExists &&
-      carAlreadyExists.some((car) => car.status === 'ativo')
-    ) {
-      throw new AppError('Car already exists', 409)
+    if (carAlreadyExists?.some((car) => car.status === CarStatus.ACTIVE)) {
+      throw new AppError('car already exists', 409)
     }
-
     const car = CarsRepository.create({
       license_plate,
       brand,
@@ -38,8 +35,7 @@ export class CreateCarsService {
       price,
       items
     })
-
     await CarsRepository.save(car)
-    return car
+    return car.id
   }
 }

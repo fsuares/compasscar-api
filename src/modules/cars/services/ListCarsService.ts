@@ -1,19 +1,18 @@
 import AppError from '@errors/AppError'
 import { CarsRepository } from '@cars/repositories/CarsRepository'
-import { ICarPaginate, IListParams } from '@cars/interfaces/CarInterfaces'
+import { ICarPaginate, IRequestIndex } from '@cars/interfaces/CarInterfaces'
 
 export class ListCarService {
   public async execute({
     page,
     limit,
     filters
-  }: IListParams): Promise<ICarPaginate> {
-    const take = limit
-    const skip = (Number(page) - 1) * take
+  }: IRequestIndex): Promise<ICarPaginate> {
+    const skip = (Number(page) - 1) * limit
     const cars = await CarsRepository.findAll({
       page,
       skip,
-      take,
+      limit,
       filters
     })
 

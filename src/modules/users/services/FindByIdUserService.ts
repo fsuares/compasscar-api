@@ -5,7 +5,7 @@ export class FindyByIdUserService {
   public async execute(id: string) {
     const user = await UsersRepository.findByID(id)
     if (!user) {
-      throw new AppError('User not found!', 404)
+      throw new AppError('user not found!', 404)
     }
     Reflect.deleteProperty(user, 'password')
     return user

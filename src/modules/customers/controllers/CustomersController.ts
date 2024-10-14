@@ -6,12 +6,12 @@ import { ListCustomerService } from '@customers/services/ListCustomerService'
 import { UpdateCustomerService } from '@customers/services/UpdateCustomerService'
 
 export default class CustomersController {
-  public async create(req: Request, res: Response): Promise<any> {
+  public async create(req: Request, res: Response): Promise<String | any> {
     const { name, birth_date, cpf, email, phone } = req.body
 
     const createCustomer = new CreateCustomerService()
 
-    const customer = await createCustomer.execute({
+    const customerId = await createCustomer.execute({
       name,
       birth_date,
       cpf,
@@ -19,7 +19,7 @@ export default class CustomersController {
       phone
     })
 
-    return res.status(201).json(customer)
+    return res.status(201).json({ customerId })
   }
 
   public async show(req: Request, res: Response): Promise<any> {
@@ -54,7 +54,7 @@ export default class CustomersController {
     const { id } = req.params
     const { name, birth_date, cpf, email, phone } = req.body
     const updateCustomer = new UpdateCustomerService()
-    const updatedCustomer = await updateCustomer.execute({
+    await updateCustomer.execute({
       id,
       name,
       birth_date,
@@ -62,6 +62,6 @@ export default class CustomersController {
       email,
       phone
     })
-    return res.status(201).json(updatedCustomer)
+    return res.status(204).send()
   }
 }

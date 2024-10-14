@@ -4,8 +4,8 @@
     "module": "commonjs",
     "lib": ["es6"],
     "allowJs": true,
-    "outDir": "build",
-    "rootDir": "src",
+    "outDir": "./build",
+    "rootDir": "./src",
     "strict": true,
     "noImplicitAny": true,
     "strictPropertyInitialization": false,
@@ -29,5 +29,9 @@
       "@errors/*": ["errors/*"]
     }
   },
-  "exclude": ["eslint.config.mjs"]
+  "exclude": ["eslint.config.mjs", "build"],
+  "scripts": {
+    "build": "tsc",
+    "start": "node ./build/app.js"
+  }
 }

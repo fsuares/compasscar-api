@@ -18,7 +18,7 @@ export default function isValidCpf(
 
   if (cpfDigits.every((digit: number) => digit === cpfDigits[0])) {
     throw new AppError(
-      'The CPF digits cannot all be the same, send a valid CPF',
+      'the CPF digits cannot all be the same, send a valid CPF',
       400
     )
   }
@@ -42,6 +42,6 @@ export default function isValidCpf(
   if (firstVerifier === cpfDigits[9] && secondVerifier === cpfDigits[10]) {
     return next()
   } else {
-    throw new AppError('Invalid CPF, enter a valid CPF', 400)
+    throw new AppError('invalid CPF, enter a valid CPF', 400)
   }
 }
