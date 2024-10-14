@@ -30,7 +30,7 @@ The project folder consists of the following files and directories:
 │  │
 │  ├──/errors
 │  │
-│  ├──/models
+│  ├──/modules
 │  │    │
 │  │    ├──/auth
 │  │    │     ├──/controllers
@@ -43,9 +43,11 @@ The project folder consists of the following files and directories:
 │  │    │     ├──/controllers
 │  │    │     ├──/entities
 │  │    │     ├──/interfaces
+│  │    │     ├──/middlewares
 │  │    │     ├──/repositories
 │  │    │     ├──/routes
-│  │    │     └──/services
+│  │    │     ├──/services
+│  │    │     └──/utils
 │  │    │
 │  │    ├──/customers
 │  │    │     ├──/controllers
@@ -74,7 +76,8 @@ The project folder consists of the following files and directories:
 │  │          ├──/services
 │  │          └──/utils
 │  │
-│  └──/tests
+│  ├── app.ts
+│  └── server.ts
 │
 ├── .editorconfig
 ├── .env.example
@@ -89,53 +92,104 @@ The project folder consists of the following files and directories:
 └──  tsconfig.json
 ```
 
-## Top-Level Directories
+## Top Level Directories
 
-- **`/docs`**: Contains swagger documentation file.
-- **`/src`**: Contains the source code of the application server.
-- **`/src/@types`**: Contains custom TypeScript type definitions to enhance the development experience and provide support for static typing.
-- **`/database`**: Contains files related to database configuration.
-- **`/database/migrations`**: Contains scripts for performing database migrations, allowing schema changes to be applied in a controlled manner.
-- **`/errors`**: This directory centralizes the definition and handling of custom errors for the application, allowing for more organized exception management.
-- **`/src/modules`**: The models directory groups the logic related to different entities of the application. Each subdirectory contains the specific structure of the entity, organized into components.
-- **`.env`**: Environment configuration file (not included in version control).
+- **`/docs`**: Application documentation.
+
+- **`/src`**: Application source code.
+
+  - **`/@types`**: Custom type definitions.
+  - **`/database`**: Database management.
+    - **`/migrations`**: Database migration files.
+    - **`/seed`**: Scripts to seed the database.
+    - **`/utils`**: Database utilities.
+  - **`/errors`**: Custom error handling and definitions.
+  - **`/modules`**: Application domain modules.
+    - **`/auth`**, **`/cars`**, **`/customers`**, **`/orders`**, **`/users`**: Management of different system entities.
+      - **`/controllers`**: Handles requests and responses.
+      - **`/entities`**: Domain entity definitions.
+      - **`/interfaces`**: Type declarations and contracts.
+      - **`/middlewares`**: Middleware logic (validations, authentication, etc.).
+      - **`/repositories`**: Database access and manipulation.
+      - **`/routes`**: API route definitions.
+      - **`/services`**: Business logic.
+      - **`/utils`**: Utility functions specific to each domain.
+  - **`app.ts`**: Main application file.
+  - **`server.ts`**: Server initialization.
+
+- **`.editorconfig`**: Editor configuration settings.
+- **`.env.example`**: Example environment variables file.
+- **`.gitignore`**: Files/folders ignored by Git.
+- **`.prettierrc.json`**: Prettier formatting configuration.
+- **`docker-compose.yaml`**: Docker container definitions.
+- **`eslint.config.mjs`**: ESLint configuration.
+- **`package.json`**: Project dependencies and scripts.
+- **`pnpm-lock.yaml`**: PNPM lock file.
+- **`README.md`**: Main application documentation.
+- **`tsconfig.json`**: TypeScript configuration.
 
 ## Intallation
 
-#### Clone the repository
+### 1. Clone the repository
 
 ```bash
   git clone https://github.com/RogerioCordeiro/AWS_NODE_AGO24_DESAFIO_02_ALFRED.git
 ```
 
-## Usage
-
-- ### Change to project folder
+### 2. Change to project folder
 
 ```bash
   cd AWS_NODE_AGO24_DESAFIO_02_ALFRED
 ```
 
-- ### Build docker container
+### 3. Create a `.env` File
+
+Create a `.env` file in the root directory of your project. You can use the `.env.example` file as a template. Copy the contents of `.env.example` to create your own `.env` file.
+
+### 4. Configure Your `.env` File
+
+Edit the `.env` file and set the values for the following variables:
+
+```dotenv
+POSTGRES_USER=
+POSTGRES_PASSWORD=
+POSTGRES_DB=
+DATABASE_URL=
+
+DOCKER_VOLUMES=
+
+SEED_USER_NAME=
+SEED_USER_EMAIL=
+SEED_USER_PASSWORD=
+
+JWT_EXPIRES_IN=
+JWT_SECRET=
+
+API_PORT=
+```
+
+## Usage
+
+### 1. Build docker container
 
 ```bash
   docker-compose up
 ```
 
-## Environment Variables
+### 2. Start the application
 
-This project uses the `dotenv` package to manage environment variables. To set up your environment variables, follow these steps:
+- Using npm
 
-### 1. Create a `.env` File
+```bash
+  npm run dev
+```
 
-Create a `.env` file in the root directory of your project. You can use the `.env.example` file as a template. Copy the contents of `.env.example` to create your own `.env` file.
+- Using pnpm
 
-### 2. Configure Your `.env` File
-
-![envsample](/docs/images/dotenv.png)
-
-Edit the `.env` file and set the values for the following variables:
+```bash
+  pnpm dev
+```
 
 ## API Documentation
 
-The API documentation is available at [/api-docs](http://localhost:${API_PORT}/api-docs).
+The API documentation is available at [http://localhost:${API_PORT}/api-docs](http://localhost:3333/api-docs).
