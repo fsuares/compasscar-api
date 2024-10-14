@@ -12,13 +12,11 @@ export interface ICreateUser
   extends Omit<User, 'id' | 'excluded_at' | 'created_at' | 'updated_at'> {}
 
 export interface IUpdateUser
-  extends Omit<User, 'excluded_at' | 'created_at' | 'updated_at'> {
-  oldPassword: string
-}
+  extends Omit<User, 'excluded_at' | 'created_at' | 'updated_at'> {}
 
 export interface IUserPaginate {
   total: number
-  page: number
+  total_pages: number
   limit: number
   data: IUsersResponse[]
 }
