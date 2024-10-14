@@ -43,7 +43,8 @@ export const CarsRepository = dataSource.getRepository(Car).extend({
     const query = this.createQueryBuilder('cars').skip(skip).take(limit)
     Number(filters.yearMin)
     Number(filters.yearMax)
-    Number(filters.km)
+    Number(filters.kmMin)
+    Number(filters.kmMax)
     Number(filters.priceMin)
     Number(filters.priceMax)
 
@@ -54,7 +55,8 @@ export const CarsRepository = dataSource.getRepository(Car).extend({
       plate: 'cars.license_plate = :plate',
       yearMin: 'cars.year >= :yearMin',
       yearMax: 'cars.year <= :yearMax',
-      km: 'cars.km <= :kmMax',
+      kmMin: 'cars.km >= :kmMin',
+      kmMax: 'cars.km <= :kmMax',
       priceMin: 'cars.price >= :priceMin',
       priceMax: 'cars.price <= :priceMax'
     }
