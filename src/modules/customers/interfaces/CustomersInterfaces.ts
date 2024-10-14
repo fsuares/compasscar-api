@@ -9,7 +9,7 @@ export interface IListParams {
 export interface ICustomerPaginate {
   total: number
   total_pages: number
-  per_page: number
+  limit: number
   data: Customer[]
 }
 
