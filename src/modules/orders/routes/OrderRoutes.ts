@@ -7,30 +7,31 @@ import AppError from '@errors/AppError'
 const ordersRouter = Router()
 const ordersController = new OrdersController()
 
-ordersRouter.get('/', ordersController.findAll),
-  ordersRouter.post(
-    '/',
-    celebrate({
-      [Segments.BODY]: {
-        customer_id: Joi.string().uuid().required().messages({
-          'string.base': 'id must be a valid string',
-          'string.empty': 'id cannot be empty',
-          'string.guid': 'id must be a valid uuid',
-          'any.required': 'id is required'
-        }),
-        car_id: Joi.string().uuid().required().messages({
-          'string.base': 'id must be a valid string',
-          'string.empty': 'id cannot be empty',
-          'string.guid': 'id must be a valid uuid',
-          'any.required': 'id is required'
-        }),
-        cep: Joi.string().required(),
-        start_date: Joi.date().required(),
-        end_date: Joi.date().required()
-      }
-    }),
-    ordersController.create
-  )
+ordersRouter.get('/', ordersController.findAll)
+
+ordersRouter.post(
+  '/',
+  celebrate({
+    [Segments.BODY]: {
+      customer_id: Joi.string().uuid().required().messages({
+        'string.base': 'customer_id must be a valid string',
+        'string.empty': 'customer_id cannot be empty',
+        'string.guid': 'customer_id must be a valid uuid',
+        'any.required': 'customer_id is required'
+      }),
+      car_id: Joi.string().uuid().required().messages({
+        'string.base': 'car_id must be a valid string',
+        'string.empty': 'car_id cannot be empty',
+        'string.guid': 'car_id must be a valid uuid',
+        'any.required': 'car_id is required'
+      }),
+      cep: Joi.string().required(),
+      start_date: Joi.date().required(),
+      end_date: Joi.date().required()
+    }
+  }),
+  ordersController.create
+)
 
 ordersRouter.get(
   '/:id',
