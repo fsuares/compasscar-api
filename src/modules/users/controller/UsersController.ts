@@ -35,12 +35,13 @@ export class UsersController {
 
   public async update(req: Request, res: Response): Promise<string | any> {
     const id = req.params.id
-    const { name, email, password } = req.body
+    const { name, email, password, oldPassword } = req.body
     const updateUser = await new UpdateUserService().execute({
       id,
       name,
       email,
-      password
+      password,
+      oldPassword
     })
     return res.status(204).send()
   }

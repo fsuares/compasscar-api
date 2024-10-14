@@ -3,10 +3,16 @@ import BadRequestError from '@errors/BadRequest'
 import { IUpdateUser } from '@users/interface/UserInterfaces'
 import { UsersRepository } from '@users/repositories/UsersRepository'
 import { validateInput } from '@users/utils/ValidateInput'
-import { hash } from 'bcrypt'
+import { compare, hash } from 'bcrypt'
 
 export class UpdateUserService {
-  public async execute({ id, name, email, password }: IUpdateUser) {
+  public async execute({
+    id,
+    name,
+    email,
+    password,
+    oldPassword
+  }: IUpdateUser) {
     const user = await UsersRepository.findByIdAndExcludedAt(id)
     const validationErrors = validateInput({ name, email, password }, true)
 
@@ -20,9 +26,20 @@ export class UpdateUserService {
     if (emailExists.length > 0) {
       throw new AppError('email address already used.', 409)
     }
-    if (password) {
+
+    if (password && !oldPassword) {
+      throw new AppError('old password is required')
+    }
+
+    if (password && oldPassword) {
+      const checkOldPassword = await compare(oldPassword, user.password)
+      if (!checkOldPassword) {
+        throw new AppError('old password does not match.')
+      }
+
       user.password = await hash(password, 8)
     }
+
     user.name = name
     user.email = email
     await UsersRepository.save(user)
