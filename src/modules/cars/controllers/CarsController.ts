@@ -25,7 +25,7 @@ export default class CarsController {
 
   public async show(req: Request, res: Response): Promise<Response> {
     const { id } = req.params
-    const car = new ShowCarService().execute({ id })
+    const car = await new ShowCarService().execute({ id })
     return res.status(200).json(car)
   }
 
@@ -33,7 +33,7 @@ export default class CarsController {
     const { id } = req.params
     const updateCar = new UpdateCarService()
     const car = await updateCar.execute({ id, ...req.body })
-    return res.status(200).json(car)
+    return res.status(204).send()
   }
 
   public async delete(req: Request, res: Response): Promise<Response> {
