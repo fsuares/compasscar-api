@@ -17,4 +17,5 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - ~${DOCKER_VOLUMES}:var/lib/postgressql/data
+      - ~${DOCKER_VOLUMES}:/var/lib/postgressql/data
+      - ./src/database/init/:/docker-entrypoint-initdb.d/
