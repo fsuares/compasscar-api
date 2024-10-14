@@ -59,7 +59,7 @@ export class CreateOrdersTable1728551978379 implements MigrationInterface {
           },
           {
             name: 'penalty_value',
-            type: 'float',
+            type: 'decimal',
             precision: 10,
             scale: 2,
             isNullable: true,
