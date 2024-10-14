@@ -176,7 +176,21 @@ API_PORT=
   docker-compose up
 ```
 
-### 2. Start the application
+### 2. Run migrations to create tables
+
+- Using npm
+
+```bash
+  npm run typeorm:run
+```
+
+- Using pnpm
+
+```bash
+  pnpm typeorm:run
+```
+
+### 3. Start the application
 
 - Using npm
 
@@ -192,4 +206,4 @@ API_PORT=
 
 ## API Documentation
 
-The API documentation is available at [http://localhost:${API_PORT}/api-docs](http://localhost:3333/api-docs).
+The API documentation is available at [http://localhost:${API_PORT}/api-docs](http://localhost:3003/api-docs).
