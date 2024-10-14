@@ -71,12 +71,24 @@ export class UpdateOrderService {
       order.order_fee = feeValues[uf]
     }
 
-    if (start_date) {
-      order.start_date = start_date
-    }
+    if (start_date || end_date) {
+      if (start_date > new Date()) {
+        if (order.end_date < start_date) {
+          throw new AppError('start_date must be less than end_date', 400)
+        }
+        order.start_date = start_date
+      } else if (start_date < new Date()) {
+        throw new AppError('start_date must be greater than current date', 400)
+      }
 
-    if (end_date) {
-      order.end_date = end_date
+      if (end_date > new Date()) {
+        if (order.start_date > end_date) {
+          throw new AppError('end_date must be greater than start_date', 400)
+        }
+        order.end_date = end_date
+      } else if (end_date < new Date()) {
+        throw new AppError('end_date must be greater than current date', 400)
+      }
     }
 
     const total_value =

@@ -36,12 +36,11 @@ export const CarsRepository = dataSource.getRepository(Car).extend({
   },
 
   async findAll({
-    page,
     skip,
-    take,
+    limit,
     filters = {}
   }: ISearchParams): Promise<ICarPaginate> {
-    const query = this.createQueryBuilder('cars').skip(skip).take(take)
+    const query = this.createQueryBuilder('cars').skip(skip).take(limit)
     Number(filters.yearMin)
     Number(filters.yearMax)
     Number(filters.km)
@@ -71,15 +70,11 @@ export const CarsRepository = dataSource.getRepository(Car).extend({
       query.andWhere('cars.items && ARRAY[:...items]', { items: filters.items })
     }
 
-    if (filters.orderBy && filters.orderBy.length > 0) {
-      const orderFields = new Set(['price', 'year', 'km'])
-      filters.orderBy.forEach((orderField: string, index: number) => {
-        if (orderFields.has(orderField)) {
-          query.addOrderBy(
-            `cars.${orderField}`,
-            filters.orderDirection?.[index] || 'ASC'
-          )
-        }
+    if (filters.orderBy) {
+      const orderBy = [filters.orderBy]
+      orderBy.forEach((orderOptions: string) => {
+        const [field, order] = orderOptions.split(':')
+        query.addOrderBy(`cars.${field}`, order.toUpperCase() as 'ASC' | 'DESC')
       })
     }
 
@@ -87,8 +82,8 @@ export const CarsRepository = dataSource.getRepository(Car).extend({
 
     return {
       total: count,
-      total_pages: Math.ceil(count / take),
-      per_page: take,
+      total_pages: Math.ceil(count / limit),
+      limit: limit,
       data: cars
     }
   }
