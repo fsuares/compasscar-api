@@ -17,9 +17,11 @@ export interface IUpdateUser
 export interface IUserPaginate {
   total: number
   page: number
-  per_page: number
-  data: User[]
+  limit: number
+  data: IUsersResponse[]
 }
+
+export interface IUsersResponse extends Omit<User, 'password' | 'email'> {}
 
 export interface IListRequest {
   page: number
@@ -33,4 +35,3 @@ export interface ISearchParams {
   take: number
   filters?: any
 }
-
