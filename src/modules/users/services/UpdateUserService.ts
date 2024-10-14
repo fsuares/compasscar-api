@@ -6,13 +6,7 @@ import { validateInput } from '@users/utils/ValidateInput'
 import { compare, hash } from 'bcrypt'
 
 export class UpdateUserService {
-  public async execute({
-    id,
-    name,
-    email,
-    password,
-    oldPassword
-  }: IUpdateUser) {
+  public async execute({ id, name, email, password }: IUpdateUser) {
     const user = await UsersRepository.findByIdAndExcludedAt(id)
     const validationErrors = validateInput({ name, email, password }, true)
 
@@ -27,16 +21,7 @@ export class UpdateUserService {
       throw new AppError('email address already used.', 409)
     }
 
-    if (password && !oldPassword) {
-      throw new AppError('old password is required')
-    }
-
-    if (password && oldPassword) {
-      const checkOldPassword = await compare(oldPassword, user.password)
-      if (!checkOldPassword) {
-        throw new AppError('old password does not match.')
-      }
-
+    if (password) {
       user.password = await hash(password, 8)
     }
 
