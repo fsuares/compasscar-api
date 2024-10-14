@@ -22,9 +22,11 @@ paths:
                 email:
                   type: string
                   format: email
+                  example: 'admin212@admin.com'
                 password:
                   type: string
                   minLength: 8
+                  example: 'S3cr3t!@iJ821'
               required:
                 - email
                 - password
@@ -38,7 +40,10 @@ paths:
                 properties:
                   token:
                     type: string
-                    example: 'your_jwt_token_here'
+                    example: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjViZGY0YzYwLWZkZTItNDc3Zi1hMDU0LWY4MGJkY2Q1MWU4NCIsImlhdCI6MTcyODkzMDEzNCwiZXhwIjoxNzI5Nzk0MTM0fQ.WAfL0xSzeomNPjis0Uyb88QvOK968C7GGQqC3eMKHxg'
+                  expiresIn:
+                    type: number
+                    example: '1729794134'
         '400':
           description: Bad Request
           content:
@@ -51,7 +56,7 @@ paths:
                     example: error
                   message:
                     type: string
-                    example: 'Invalid email or password.'
+                    example: 'invalid email or password'
         '401':
           description: Unauthorized
           content:
@@ -64,7 +69,7 @@ paths:
                     example: error
                   message:
                     type: string
-                    example: 'Invalid credentials.'
+                    example: 'invalid credentials.'
         '500':
           description: Internal Server Error
           content:
@@ -78,7 +83,6 @@ paths:
                   message:
                     type: string
                     example: 'internal server error'
-
   /users:
     post:
       tags:
@@ -99,7 +103,7 @@ paths:
                 properties:
                   userId:
                     type: string
-                    example: d2e48582-554f-444a-8531-b8e69f373db4
+                    example: 'd2e48582-554f-444a-8531-b8e69f373db4'
         '400':
           description: Bad Request
           content:
@@ -199,13 +203,36 @@ paths:
           schema:
             type: string
             format: uuid
+            example: 'e1ef1217-14a1-4885-aeb3-b76c9fe789e2'
       responses:
-        '200':
-          description: User found
+        200:
+          description: 'Usuário encontrado'
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  id:
+                    type: string
+                    example: 'e1ef1217-14a1-4885-aeb3-b76c9fe789e2'
+                  name:
+                    type: string
+                    example: 'Jose Fernando'
+                  email:
+                    type: string
+                    example: 'fernandojose@emaildele.com.br'
+                  excluded_at:
+                    type: string
+                    format: date-time
+                    example: null
+                  created_at:
+                    type: string
+                    format: date-time
+                    example: '2024-10-14T18:25:54.366Z'
+                  updated_at:
+                    type: string
+                    format: date-time
+                    example: '2024-10-14T18:25:54.366Z'
         '404':
           description: User not found
         '500':
@@ -214,6 +241,20 @@ paths:
       tags:
         - Users
       description: Updates a user by ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: User ID
+          schema:
+            type: string
+            format: uuid
+            example: 'e1ef1217-14a1-4885-aeb3-b76c9fe789e2'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
       parameters:
         - name: id
           in: path
@@ -231,9 +272,6 @@ paths:
         '200':
           description: User updated
           content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/User'
         '400':
           description: Bad Request
         '404':
@@ -252,6 +290,7 @@ paths:
           schema:
             type: string
             format: uuid
+            example: 'e1ef1217-14a1-4885-aeb3-b76c9fe789e2'
       responses:
         '204':
           description: User deleted
@@ -272,21 +311,32 @@ paths:
               properties:
                 license_plate:
                   type: string
+                  example: 'EFG8H96'
                 brand:
                   type: string
+                  example: 'Fiat'
                 model:
                   type: string
+                  example: 'Cronos'
                 year:
                   type: number
+                  example: 2013
                 km:
                   type: number
+                  example: 5000
                 price:
                   type: number
+                  example: 130.50
                 items:
                   type: array
                   items:
                     type: string
-                  maxItems: 5
+                    maxItems: 5
+                    example:
+                      - "air conditioning"
+                      - "leather seats"
+                      - "sunroof"
+                      - "navigation system"
               required:
                 - license_plate
                 - brand
@@ -305,7 +355,7 @@ paths:
                 properties:
                   id:
                     type: string
-                    example: 'car_id_example'
+                    example: '4ca66fb8-9bc6-4e2d-bf5b-02debdf45f68'
         '400':
           description: Bad Request
           content:
@@ -361,23 +411,23 @@ paths:
                         id:
                           type: string
                           format: uuid
-                          example: "5d1007ca-9d8d-42ee-b268-e46cadea6903"
+                          example: '5d1007ca-9d8d-42ee-b268-e46cadea6903'
                         license_plate:
                           type: string
-                          example: "ABC1234"
+                          example: 'ABC1234'
                         brand:
                           type: string
-                          example: "Toyota"
+                          example: 'Toyota'
                         model:
                           type: string
-                          example: "Corolla"
+                          example: 'Corolla'
                         year:
                           type: integer
                           example: 2020
                         status:
                           type: string
                           enum: [active, inactive]
-                          example: "active"
+                          example: 'active'
                         km:
                           type: integer
                           example: 15000
@@ -389,20 +439,29 @@ paths:
                           type: array
                           items:
                             type: string
-                            example: "air conditioning"
+                            example: 'air conditioning'
                         created_at:
                           type: string
                           format: date-time
-                          example: "2024-10-13T01:43:43.294Z"
+                          example: '2024-10-13T01:43:43.294Z'
                         updated_at:
                           type: string
                           format: date-time
-                          example: "2024-10-13T01:43:43.294Z"
+                          example: '2024-10-13T01:43:43.294Z'
   /cars/{id}:
     get:
       tags:
         - Cars
       description: Returns a car by ID.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: Car ID
+          schema:
+            type: string
+            format: uuid
+            exeample: 'e1ef1217-14a1-4885-aeb3-b76c9fe789e2'
       parameters:
         - name: id
           in: path
@@ -419,24 +478,51 @@ paths:
               schema:
                 type: object
                 properties:
-                  id:
-                    type: string
-                  license_plate:
-                    type: string
-                  brand:
-                    type: string
-                  model:
-                    type: string
-                  year:
-                    type: number
-                  km:
-                    type: number
-                  price:
-                    type: number
-                  items:
+                  data:
                     type: array
                     items:
-                      type: string
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                          format: uuid
+                          example: '5d1007ca-9d8d-42ee-b268-e46cadea6903'
+                        license_plate:
+                          type: string
+                          example: 'ABC1234'
+                        brand:
+                          type: string
+                          example: 'Toyota'
+                        model:
+                          type: string
+                          example: 'Corolla'
+                        year:
+                          type: integer
+                          example: 2020
+                        status:
+                          type: string
+                          enum: [active, inactive]
+                          example: 'active'
+                        km:
+                          type: integer
+                          example: 15000
+                        price:
+                          type: number
+                          format: float
+                          example: 85.00
+                        items:
+                          type: array
+                          items:
+                            type: string
+                            example: 'air conditioning'
+                        created_at:
+                          type: string
+                          format: date-time
+                          example: '2024-10-13T01:43:43.294Z'
+                        updated_at:
+                          type: string
+                          format: date-time
+                          example: '2024-10-13T01:43:43.294Z'
         '404':
           description: Car not found
         '500':
@@ -453,6 +539,7 @@ paths:
           schema:
             type: string
             format: uuid
+            example: 'e1ef1217-14a1-4885-aeb3-b76c9fe789e2'
       requestBody:
         content:
           application/json:
@@ -461,21 +548,31 @@ paths:
               properties:
                 license_plate:
                   type: string
+                  example: 'EFG8H96'
                 brand:
                   type: string
+                  example: 'Fiat'
                 model:
                   type: string
+                  example: 'Cronos'
                 year:
                   type: number
+                  example: 2013
                 km:
                   type: number
+                  example: 5000
                 price:
                   type: number
+                  example: 130.50
                 items:
                   type: array
                   items:
                     type: string
-                  maxItems: 5
+                  example:
+                    - "air conditioning"
+                    - "leather seats"
+                    - "sunroof"
+                    - "navigation system"
               required:
                 - license_plate
                 - brand
@@ -485,21 +582,15 @@ paths:
                 - price
                 - items
       responses:
-        '200':
+        '204':
           description: Car updated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
         '400':
           description: Bad Request
         '404':
           description: Car not found
         '500':
           description: Internal server error
+
     delete:
       tags:
         - Cars
@@ -512,6 +603,7 @@ paths:
           schema:
             type: string
             format: uuid
+            example: 'e1ef1217-14a1-4885-aeb3-b76c9fe789e2'
       responses:
         '204':
           description: Car deleted
@@ -519,6 +611,7 @@ paths:
           description: Car not found
         '500':
           description: Internal server error
+
   /customers:
     get:
       tags:
@@ -549,24 +642,24 @@ paths:
                         id:
                           type: string
                           format: uuid
-                          example: "92e948c5-fdb5-43a7-bc6d-6b6dcb5f1c84"
+                          example: '92e948c5-fdb5-43a7-bc6d-6b6dcb5f1c84'
                         name:
                           type: string
-                          example: "Carlos2"
+                          example: 'Carlos2'
                         birth_date:
                           type: string
                           format: date
-                          example: "1960-12-10"
+                          example: '1960-12-10'
                         cpf:
                           type: string
-                          example: "911964918-52"
+                          example: '911964918-52'
                         email:
                           type: string
                           format: email
-                          example: "carlos2@hotmail.com"
+                          example: 'carlos2@hotmail.com'
                         phone:
                           type: string
-                          example: "(20) 99517-2596"
+                          example: '(20) 99517-2596'
                         excluded_at:
                           type: string
                           nullable: true
@@ -574,11 +667,11 @@ paths:
                         created_at:
                           type: string
                           format: date-time
-                          example: "2024-10-12T16:48:27.262Z"
+                          example: '2024-10-12T16:48:27.262Z'
                         updated_at:
                           type: string
                           format: date-time
-                          example: "2024-10-12T17:01:01.979Z"
+                          example: '2024-10-12T17:01:01.979Z'
     post:
       tags:
         - Customers
@@ -591,15 +684,20 @@ paths:
               properties:
                 name:
                   type: string
+                  example: 'Maria Jose'
                 birth_date:
                   type: string
                   format: date
+                  example: '2000-01-01'
                 cpf:
                   type: string
+                  example: 112543552-65
                 email:
                   type: string
+                  example: 'marijose@seuprovedor.com.br'
                 phone:
                   type: string
+                  example: '(20) 99517-2596'
               required:
                 - name
                 - birth_date
@@ -616,7 +714,7 @@ paths:
                 properties:
                   id:
                     type: string
-                    example: 'customer_id_example'
+                    example: '92e948c5-fdb5-43a7-bc6d-6b6dcb5f1c84'
         '400':
           description: Bad Request
           content:
@@ -656,6 +754,7 @@ paths:
           schema:
             type: string
             format: uuid
+            example: '92e948c5-fdb5-43a7-bc6d-6b6dcb5f1c84'
       responses:
         '200':
           description: Customer found
@@ -666,17 +765,7 @@ paths:
                 properties:
                   id:
                     type: string
-                  name:
-                    type: string
-                  birth_date:
-                    type: string
-                    format: date
-                  cpf:
-                    type: string
-                  email:
-                    type: string
-                  phone:
-                    type: string
+                    example: '435a4b24-c7bc-4481-a17a-14a2bed0d3e2'
         '404':
           description: Customer not found
         '500':
@@ -693,6 +782,7 @@ paths:
           schema:
             type: string
             format: uuid
+            example: '435a4b24-c7bc-4481-a17a-14a2bed0d3e2'
       responses:
         '204':
           description: Customer deleted
@@ -712,39 +802,31 @@ paths:
           schema:
             type: string
             format: uuid
+            example: '435a4b24-c7bc-4481-a17a-14a2bed0d3e2'
       requestBody:
-        content:
-          application/json:
+        application/json:
             schema:
               type: object
               properties:
                 name:
                   type: string
+                  example: 'Maria Jose'
                 birth_date:
                   type: string
                   format: date
+                  example: '2000-01-01'
                 cpf:
                   type: string
+                  example: 112543552-65
                 email:
                   type: string
+                  example: 'marijose@seuprovedor.com.br'
                 phone:
                   type: string
-              required:
-                - name
-                - birth_date
-                - cpf
-                - email
-                - phone
+                  example: '(20) 99517-2596'
       responses:
         '200':
           description: Customer updated
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  id:
-                    type: string
         '400':
           description: Bad Request
         '404':
@@ -848,23 +930,23 @@ paths:
                         id:
                           type: string
                           format: uuid
-                          example: "37a513ae-3536-4280-8ed3-1b5087c8872f"
+                          example: '37a513ae-3536-4280-8ed3-1b5087c8872f'
                         status:
                           type: string
                           enum: [approved, pending, rejected]
-                          example: "approved"
+                          example: 'approved'
                         orderDate:
                           type: string
                           format: date-time
-                          example: "2024-10-13T02:08:44.523Z"
+                          example: '2024-10-13T02:08:44.523Z'
                         startDate:
                           type: string
                           format: date-time
-                          example: "2024-11-01T00:00:00.000Z"
+                          example: '2024-11-01T00:00:00.000Z'
                         endDate:
                           type: string
                           format: date-time
-                          example: "2024-11-30T00:00:00.000Z"
+                          example: '2024-11-30T00:00:00.000Z'
                         orderFee:
                           type: number
                           format: float
@@ -875,26 +957,26 @@ paths:
                           example: 2465170
                         cep:
                           type: string
-                          example: "04689-070"
+                          example: '04689-070'
                         city:
                           type: string
-                          example: "São Paulo"
+                          example: 'São Paulo'
                         uf:
                           type: string
-                          example: "SP"
+                          example: 'SP'
                         customer:
                           type: object
                           properties:
                             id:
                               type: string
                               format: uuid
-                              example: "92e948c5-fdb5-43a7-bc6d-6b6dcb5f1c84"
+                              example: '92e948c5-fdb5-43a7-bc6d-6b6dcb5f1c84'
                             name:
                               type: string
-                              example: "Carlos2"
+                              example: 'Carlos2'
                             cpf:
                               type: string
-                              example: "911964918-52"
+                              example: '911964918-52'
   /orders/{id}:
     get:
       tags:
@@ -908,9 +990,10 @@ paths:
           schema:
             type: string
             format: uuid
+            example: '37a513ae-3536-4280-8ed3-1b5087c8872f'
       responses:
-        '200':
-          description: Pedido recuperado com sucesso
+        200:
+          description: Pedido aprovado com sucesso
           content:
             application/json:
               schema:
@@ -919,24 +1002,28 @@ paths:
                   id:
                     type: string
                     format: uuid
+                    example: '37a513ae-3536-4280-8ed3-1b5087c8872f'
                   status:
                     type: string
-                    enum: [approved, pending, canceled]
+                    example: 'approved'
                   orderDate:
                     type: string
                     format: date-time
+                    example: '2024-10-13T02:08:44.523Z'
                   startDate:
                     type: string
-                    format: date-time
+                    format: date
+                    example: '2024-11-01'
                   endDate:
                     type: string
-                    format: date-time
+                    format: date
+                    example: '2024-11-30'
                   orderFee:
                     type: number
-                    format: float
+                    example: 170
                   totalValue:
                     type: number
-                    format: float
+                    example: 2465170
                   cep:
                     type: string
                     example: '04689-070'
@@ -952,11 +1039,14 @@ paths:
                       id:
                         type: string
                         format: uuid
+                        example: '92e948c5-fdb5-43a7-bc6d-6b6dcb5f1c84'
                       name:
                         type: string
+                        example: 'Carlos2'
                       email:
                         type: string
                         format: email
+                        example: 'carlos2@hotmail.com'
                       cpf:
                         type: string
                         example: '911964918-52'
@@ -966,23 +1056,34 @@ paths:
                       id:
                         type: string
                         format: uuid
+                        example: '5d1007ca-9d8d-42ee-b268-e46cadea6903'
                       brand:
                         type: string
+                        example: 'Toyota'
                       model:
                         type: string
+                        example: 'Corolla'
                       year:
                         type: integer
+                        example: 2020
                       km:
                         type: integer
+                        example: 15000
                       items:
                         type: array
                         items:
                           type: string
+                        example:
+                          - 'air conditioning'
+                          - 'sunroof'
+                          - 'leather seats'
+                          - 'navigation system'
                       licensePlate:
                         type: string
+                        example: 'ABC1234'
                       dailyValue:
                         type: number
-                        format: float
+                        example: 85000
         '404':
           description: Pedido não encontrado
         '500':
@@ -999,6 +1100,7 @@ paths:
           schema:
             type: string
             format: uuid
+            example: '37a513ae-3536-4280-8ed3-1b5087c8872f'
       responses:
         '204':
           description: Order deleted
@@ -1013,10 +1115,13 @@ components:
       properties:
         name:
           type: string
+          example: 'Jose Carlos'
         email:
           type: string
+          example: 'josecarlos@seuemail.com.br'
         password:
           type: string
+          example: 'TRRESde236#$'
       required:
         - name
         - email
@@ -1026,20 +1131,31 @@ components:
       properties:
         license_plate:
           type: string
+          example: "ABC1D23"
         brand:
           type: string
+          example: "Toyota"
         model:
           type: string
+          example: "Corolla"
         year:
           type: number
+          example: 2020
         km:
           type: number
+          example: 30000
         price:
           type: number
+          example: 495.50
         items:
           type: array
           items:
             type: string
+          example:
+            - "air conditioning"
+            - "leather seats"
+            - "sunroof"
+            - "navigation system"
       required:
         - license_plate
         - brand
@@ -1053,15 +1169,21 @@ components:
       properties:
         name:
           type: string
+          example: "João Silva"
         birth_date:
           type: string
           format: date
+          example: "1985-04-12"
         cpf:
           type: string
+          example: "123.456.789-00"
         email:
           type: string
+          format: email
+          example: "joao.silva@example.com"
         phone:
           type: string
+          example: "+55 11 91234-5678"
       required:
         - name
         - birth_date
@@ -1074,23 +1196,23 @@ components:
         id:
           type: string
           format: uuid
-          example: "37a513ae-3536-4280-8ed3-1b5087c8872f"
+          example: '37a513ae-3536-4280-8ed3-1b5087c8872f'
         status:
           type: string
           enum: [approved, pending, rejected]
-          example: "approved"
+          example: 'approved'
         orderDate:
           type: string
           format: date-time
-          example: "2024-10-13T02:08:44.523Z"
+          example: '2024-10-13T02:08:44.523Z'
         startDate:
           type: string
           format: date-time
-          example: "2024-11-01T00:00:00.000Z"
+          example: '2024-11-01T00:00:00.000Z'
         endDate:
           type: string
           format: date-time
-          example: "2024-11-30T00:00:00.000Z"
+          example: '2024-11-30T00:00:00.000Z'
         orderFee:
           type: number
           format: float
@@ -1101,43 +1223,43 @@ components:
           example: 2465170
         cep:
           type: string
-          example: "04689-070"
+          example: '04689-070'
         city:
           type: string
-          example: "São Paulo"
+          example: 'São Paulo'
         uf:
           type: string
-          example: "SP"
+          example: 'SP'
         customer:
           type: object
           properties:
             id:
               type: string
               format: uuid
-              example: "92e948c5-fdb5-43a7-bc6d-6b6dcb5f1c84"
+              example: '92e948c5-fdb5-43a7-bc6d-6b6dcb5f1c84'
             name:
               type: string
-              example: "Carlos2"
+              example: 'Carlos2'
             email:
               type: string
               format: email
-              example: "carlos2@hotmail.com"
+              example: 'carlos2@hotmail.com'
             cpf:
               type: string
-              example: "911964918-52"
+              example: '911964918-52'
         car:
           type: object
           properties:
             id:
               type: string
               format: uuid
-              example: "5d1007ca-9d8d-42ee-b268-e46cadea6903"
+              example: '5d1007ca-9d8d-42ee-b268-e46cadea6903'
             brand:
               type: string
-              example: "Toyota"
+              example: 'Toyota'
             model:
               type: string
-              example: "Corolla"
+              example: 'Corolla'
             year:
               type: integer
               example: 2020
@@ -1148,10 +1270,10 @@ components:
               type: array
               items:
                 type: string
-                example: "air conditioning"
+                example: 'air conditioning'
             licensePlate:
               type: string
-              example: "ABC1234"
+              example: 'ABC1234'
             dailyValue:
               type: number
               format: float
