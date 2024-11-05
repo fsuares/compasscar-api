@@ -1,7 +1,7 @@
 import 'dotenv/config'
-import { dataSource } from '@datasource'
+import { dataSource } from './database/data-source'
 import { app } from './app'
-import UserSeed from '@database/seed/UserSeed'
+import UserSeed from './database/seed/UserSeed'
 
 async function bootstrap() {
   try {
